@@ -5,7 +5,7 @@ key _sound_on ="e9a0c36a-dffc-eca0-27b5-3ba4d527dfad";
 key _sound_off = "de58f2a6-ba96-d252-7351-ca839d847196";
 
 integer listener;
-integer channel;
+integer chan;
 
 integer cameraOn            = FALSE;
 integer adultcamOn          = FALSE;
@@ -14,17 +14,26 @@ integer childcamOn          = FALSE;
 integer petitecamOn         = FALSE;
 integer cinematiccamOn      = FALSE;
 integer sitcamOn            = FALSE;
-//integer sitOverride         = FALSE;
 
-integer DEBUG               = TRUE;
+integer Cam2Avi_ON          = FALSE;
+integer TP2Avi_ON           = FALSE;
+integer TP2CAM_ON           = FALSE;
+integer ANTIPUSH_ON         = FALSE;
+integer FOLLOWER_ON         = FALSE;
+
+//integer sitOverride         = FALSE; // COMING SOON!!!!!!!!!!!!!!
+
+//integer DEBUG               = TRUE;
 
 string objName = "[{Amy}]Camera Mod v3";
 
+/*
 debug(string message)
 {
-    if(DEBUG == TRUE)
+    if (DEBUG == TRUE)
         llOwnerSay("[DEBUG] " + message);
 }
+*/
 
 info(string message)
 {
@@ -34,46 +43,46 @@ info(string message)
 menu(key id)
 {
     if (cameraOn == FALSE){
-        list main_menu = [ "■ Off ■", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "■ Off ■", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "Features", "† STOP †", "† Reset †", "† Exit †" ];
         llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
+        chan = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(chan, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, chan);
     }
     else if ((adultcamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "■ Adult ■", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "■ Adult ■", "□ Teen □", "□ Child □", "□ Petite □", "Features", "† STOP †", "† Reset †", "† Exit †" ];
         llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
+        chan = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(chan, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, chan);
     }
     else if ((teencamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "■ Teen ■", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "■ Teen ■", "□ Child □", "□ Petite □", "Features", "† STOP †", "† Reset †", "† Exit †" ];
         llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
+        chan = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(chan, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, chan);
     }
     else if ((childcamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "■ Child ■", "□ Petite □", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "■ Child ■", "□ Petite □", "Features", "† STOP †", "† Reset †", "† Exit †" ];
         llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
+        chan = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(chan, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, chan);
     }
     else if ((petitecamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "■ Petite ■", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "■ Petite ■", "Features", "† STOP †", "† Reset †", "† Exit †" ];
         llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
+        chan = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(chan, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, chan);
     }
     else if ((cinematiccamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "■ Cinema ■", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "■ Cinema ■", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "Features", "† STOP †", "† Reset †", "† Exit †" ];
         llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
+        chan = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(chan, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, chan);
     }
 }
 
@@ -83,13 +92,14 @@ default_cam()
     llSetCameraParams([CAMERA_ACTIVE, 1]);
 }
 
-off_cam(key agent)
+off_cam()
 {
     llSetLinkColor(LINK_THIS, _redState, ALL_SIDES);
     llPlaySound(_sound_off, 0.4);
     info("Camera Mod Disabled.");
     llSetCameraParams([CAMERA_ACTIVE, 0]);
-    llReleaseCamera(agent);
+    //llReleaseCamera(agent);
+    llClearCameraParams();
     cameraOn = FALSE;
 }
 
@@ -228,6 +238,7 @@ petite_cam()
     cinematiccamOn  = FALSE;
 }
 
+/* TODO
 sitting()
 {
     string curAnimState = llGetAnimation(llGetOwner());
@@ -264,11 +275,25 @@ sit_cam()
     sitcamOn        = TRUE;
     cinematiccamOn  = FALSE;
 }
+*/
 
 reset_cam()
 {
     info("Camera Reset.");
     llResetScript();
+}
+
+featuresmenu()
+{
+    //TODO
+    /*
+        Cam2Avi_ON
+        TP2Avi_ON
+        TP2CAM_ON
+        ANTIPUSH_ON
+        FOLLOWER_ON
+    */
+
 }
 
 default
@@ -289,7 +314,7 @@ default
 
     listen(integer channel, string name, key id, string message)
     {
-        llListenRemove(channel);
+        llListenRemove(chan);
         if (llGetOwnerKey(id) == llGetOwner())
         {
             if (message == "□ Adult □"){
@@ -318,7 +343,7 @@ default
                 return;
             }
             else if (message == "□ Off □"){
-                off_cam(id);
+                off_cam();
                 llTriggerSound(_sound_on, 0.4);
                 return;
             }
@@ -330,6 +355,9 @@ default
             else if (message == "† STOP †"){
                 llTriggerSound(_sound_on, 0.4);
                 state stopAnims;
+            }
+            else if (message == "Features"){
+                featuresmenu();
             }
             else{
                 llTriggerSound(_sound_on, 0.4);
@@ -357,7 +385,7 @@ default
             key agent = llAvatarOnSitTarget();
             if (agent){
                 llRequestPermissions(agent, PERMISSION_CONTROL_CAMERA);
-                sit_cam();
+                //sit_cam();
             }
             else{
                 llRequestPermissions(agent, PERMISSION_CONTROL_CAMERA);
@@ -372,7 +400,7 @@ default
                 else if(cinematiccamOn == TRUE)
                     cinematic_cam();
                 else
-                    off_cam(agent);
+                    off_cam();
             }
         }
     }
@@ -392,7 +420,7 @@ default
             else if(cinematiccamOn == TRUE)
                 cinematic_cam();
             else
-                off_cam(agent);
+                off_cam();
         }
     }
 }
