@@ -12,7 +12,7 @@ integer followOn = FALSE;
 integer dlgHandle = -1;
 integer dlgChannel;
 integer gMenuPosition;
-integer chan;
+integer channel;
 integer listen_handle;
 integer defdist       = TRUE;
 integer fivemDist     = FALSE;
@@ -20,6 +20,9 @@ integer tenmDist      = FALSE;
 integer fifteenmDist  = FALSE;
 integer twentyMDist   = FALSE;
 integer RANGE = 1;
+
+//NOTE (neu)
+integer g_CMFollower    = FALSE;
 
 string targetName = "";
 string objectName = "[{Amy}]Camera Mod v3 - Follower";
@@ -32,13 +35,15 @@ list distance_menu = [];
 vector _greenState = <0.000, 0.502, 0.000>;
 vector _whiteState = <1.000, 1.000, 1.000>;
 
+integer DEBUG = FALSE;
+
 // ► ◄ ▲ ▼ \\
 mainMenu(key id){
   main_menu = ["Follow", "Distance", "▼"];
   list avatar_name = llParseString2List(llGetDisplayName(id), [""], []);
-  chan = llFloor(llFrand(2000000));
-  listen_handle = llListen(chan, "", id, "");
-  llDialog(id, "Hello " + (string)avatar_name + " Select a an option", main_menu, chan);
+  channel = llFloor(llFrand(2000000));
+  listen_handle = llListen(channel, "", id, "");
+  llDialog(id, "Hello " + (string)avatar_name + " Select a an option", main_menu, channel);
 }
 
 distanceMenu(key id){
@@ -53,9 +58,9 @@ distanceMenu(key id){
   else if ((!defdist) && (!fivemDist) && (!tenmDist) && (!fifteenmDist) && (twentyMDist))
       distance_menu = ["▫Default", "▫5Meters", "▫10Meters", "▫15Meters", "▪20Meters", "◄", "▼"];
   list avatar_name = llParseString2List(llGetDisplayName(id), [""], []);
-  chan = llFloor(llFrand(2000000));
-  listen_handle = llListen(chan, "", id, "");
-  llDialog(id, "Hello " + (string)avatar_name + " Select a an option\nCurrent Distance :: "+ (string)RANGE + " Meter(s)", distance_menu, chan);
+  channel = llFloor(llFrand(2000000));
+  listen_handle = llListen(channel, "", id, "");
+  llDialog(id, "Hello " + (string)avatar_name + " Select a an option\nCurrent Distance :: "+ (string)RANGE + " Meter(s)", distance_menu, channel);
 }
 
 Menu()
@@ -176,6 +181,8 @@ default
 {
   state_entry()
   {
+    if(DEBUG)
+      llOwnerSay("state DEF");
     llSetObjectName(objectName);
     dlgChannel = -1 - (integer)("0x" + llGetSubString( (string)llGetKey(), -7, -1) );
     if(RANGE == 1)
@@ -347,6 +354,8 @@ state Scan
 {
   state_entry()
   {
+    if(DEBUG)
+      llOwnerSay("state Scan");
     avatarList = [];
     avatarUUIDs = [];
     llSensor("", NULL_KEY, AGENT, 96.0, PI);
@@ -389,6 +398,8 @@ state Dialog
     gMenuPosition = 0;
     Menu();
     init();
+    if(DEBUG)
+      llOwnerSay("state Dialog");
   }
 
   changed(integer change)

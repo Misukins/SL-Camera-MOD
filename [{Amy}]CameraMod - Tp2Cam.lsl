@@ -1,5 +1,9 @@
-string objName = "[{Amy}]Camera Mod v3 - Teleporter";
 key id;
+
+//NOTE (neu)
+integer g_CMTPCAM       = FALSE;
+
+string objName = "[{Amy}]Camera Mod v3 - Teleporter";
 
 doTeleport(key id)
 {

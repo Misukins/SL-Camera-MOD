@@ -6,6 +6,9 @@ integer gUseMoveLock;
 integer gRelockMoveLockAfterMovement;
 integer gRelockIsUserMoving;
 
+//NOTE (neu)
+integer g_CMANTIPUSH    = FALSE;
+
 vector _redState    = <0.502, 0.000, 0.000>;
 vector _whiteState  = <1.000, 1.000, 1.000>;
 

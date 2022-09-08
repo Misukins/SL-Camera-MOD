@@ -10,6 +10,9 @@ integer pageLen;
 integer minPage;
 integer maxPage;
 
+//NOTE (neu)
+integer g_CMTPAVI       = FALSE;
+
 string objOwner;
 string objName = "[{Amy}]Camera Mod v3 - Teleporter";
 
@@ -128,7 +131,7 @@ state RDY
             maxPage--;
         for (i = 0; i < agentTotal; i++){
             agentKey = llList2Key(agentKeys, i);
-            //string agentName;
+            string agentName;
             agentName = cbcAgentName(agentKey);
             agentName = llGetSubString(agentName, 0, maxDialogStringLength - 1);
             agentNames += [agentName];
@@ -160,7 +163,7 @@ state RDY
                     string agentKey = llList2Key(agentKeys, targetIndex);
                     list answer = llGetObjectDetails(agentKey, [OBJECT_POS]);
                     vector targetPos = llList2Vector(answer, 0);
-                    //float dist = llVecDist(targetPos,llGetPos());
+                    float dist = llVecDist(targetPos,llGetPos());
                     llTeleportAgent(objOwner, "", targetPos, <0.0, 0.0, 0.0>);
                     llTargetRemove(0);
                     llStopMoveToTarget();
