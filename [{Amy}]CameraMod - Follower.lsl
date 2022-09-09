@@ -21,6 +21,8 @@ integer fifteenmDist  = FALSE;
 integer twentyMDist   = FALSE;
 integer RANGE = 1;
 
+integer DEBUG = FALSE;
+
 //NOTE (neu)
 integer g_CMFollower    = FALSE;
 
@@ -34,8 +36,6 @@ list distance_menu = [];
 
 vector _greenState = <0.000, 0.502, 0.000>;
 vector _whiteState = <1.000, 1.000, 1.000>;
-
-integer DEBUG = FALSE;
 
 // ► ◄ ▲ ▼ \\
 mainMenu(key id){

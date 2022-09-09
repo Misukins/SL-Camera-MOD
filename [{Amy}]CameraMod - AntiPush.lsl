@@ -87,11 +87,9 @@ default
 
     changed(integer change)
     {
-        if (change & (CHANGED_INVENTORY)){
+        if (change & (CHANGED_INVENTORY))
             movelockMe(gUseMoveLock);
-        }
-        else if (change & CHANGED_OWNER){
+        else if (change & CHANGED_OWNER)
             llResetScript();
-        }
     }
 }

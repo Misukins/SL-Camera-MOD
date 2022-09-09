@@ -1,6 +1,3 @@
-vector _greenState = <0.000, 0.502, 0.000>;
-vector _redState = <0.502, 0.000, 0.000>;
-
 key _sound_on ="e9a0c36a-dffc-eca0-27b5-3ba4d527dfad";
 key _sound_off = "de58f2a6-ba96-d252-7351-ca839d847196";
 
@@ -14,22 +11,24 @@ integer childcamOn          = FALSE;
 integer petitecamOn         = FALSE;
 integer cinematiccamOn      = FALSE;
 integer sitcamOn            = FALSE;
-//integer sitOverride         = FALSE;
+//integer sitOverride       = FALSE; // COMING SOON!!!!
 
 //NOTE (neu)
-integer g_CMFollower    = FALSE;
-integer g_CMTPCAM       = FALSE;
-integer g_CMANTIPUSH    = FALSE;
-integer g_CMTPAVI       = FALSE;
+integer g_CMFollower        = FALSE;
+integer g_CMTPCAM           = FALSE;
+integer g_CMANTIPUSH        = FALSE;
+integer g_CMTPAVI           = FALSE;
 
 integer DEBUG               = TRUE;
 
 string objName = "[{Amy}]Camera Mod v3";
 
+vector _greenState = <0.000, 0.502, 0.000>;
+vector _redState = <0.502, 0.000, 0.000>;
+
 debug(string message)
 {
-    if(DEBUG == TRUE)
-        llOwnerSay("[DEBUG] " + message);
+     llOwnerSay("[DEBUG] " + message);
 }
 
 info(string message)
