@@ -13,7 +13,7 @@ integer cinematiccamOn      = FALSE;
 integer sitcamOn            = FALSE;
 //integer sitOverride       = FALSE; // COMING SOON!!!!
 
-//NOTE (neu)
+//NOTE (neu) COMING SOON I HOPE
 integer g_CMFollower        = FALSE;
 integer g_CMTPCAM           = FALSE;
 integer g_CMANTIPUSH        = FALSE;
@@ -21,7 +21,7 @@ integer g_CMTPAVI           = FALSE;
 
 integer DEBUG               = TRUE;
 
-string objName = "[{Amy}]Camera Mod v3";
+string objName = "[{Amy}]Camera Mod v3.1 (build 1)";
 
 vector _greenState = <0.000, 0.502, 0.000>;
 vector _redState = <0.502, 0.000, 0.000>;
@@ -39,42 +39,42 @@ info(string message)
 menu(key id)
 {
     if (cameraOn == FALSE){
-        list main_menu = [ "■ Off ■", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "■ Off ■", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
     else if ((adultcamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "■ Adult ■", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "■ Adult ■", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
     else if ((teencamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "■ Teen ■", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "■ Teen ■", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
     else if ((childcamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "■ Child ■", "□ Petite □", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "■ Child ■", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
     else if ((petitecamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "■ Petite ■", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "■ Petite ■", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
     else if ((cinematiccamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "■ Cinema ■", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "■ Cinema ■", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
@@ -88,13 +88,13 @@ default_cam()
     llSetCameraParams([CAMERA_ACTIVE, 1]);
 }
 
-off_cam(key agent)
+off_cam()
 {
     llSetLinkColor(LINK_THIS, _redState, ALL_SIDES);
     llPlaySound(_sound_off, 0.4);
     info("Camera Mod Disabled.");
     llSetCameraParams([CAMERA_ACTIVE, 0]);
-    llReleaseCamera(agent);
+    llClearCameraParams();
     cameraOn = FALSE;
 }
 
@@ -323,7 +323,7 @@ default
                 return;
             }
             else if (message == "□ Off □"){
-                off_cam(id);
+                off_cam();
                 llTriggerSound(_sound_on, 0.4);
                 return;
             }
@@ -335,6 +335,10 @@ default
             else if (message == "† STOP †"){
                 llTriggerSound(_sound_on, 0.4);
                 state stopAnims;
+            }
+            else if (messafe == "† Features †"){
+                llTriggerSound(_sound_on, 0.4);
+                return;
             }
             else{
                 llTriggerSound(_sound_on, 0.4);
@@ -349,9 +353,8 @@ default
     {
         if (perm & PERMISSION_CONTROL_CAMERA)
             llSetCameraParams([CAMERA_ACTIVE, 1]);
-        else{
+        else
            llResetScript();
-        }
     }
 
     changed(integer change)
@@ -377,7 +380,7 @@ default
                 else if(cinematiccamOn == TRUE)
                     cinematic_cam();
                 else
-                    off_cam(agent);
+                    off_cam();
             }
         }
     }
@@ -397,7 +400,7 @@ default
             else if(cinematiccamOn == TRUE)
                 cinematic_cam();
             else
-                off_cam(agent);
+                off_cam();
         }
     }
 }
