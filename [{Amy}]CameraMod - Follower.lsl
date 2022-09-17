@@ -23,9 +23,6 @@ integer RANGE = 1;
 
 integer DEBUG = FALSE;
 
-//NOTE (neu)
-integer g_CMFollower    = FALSE;
-
 string targetName = "";
 string objectName = "[{Amy}]Camera Mod v3 - Follower";
 
@@ -113,10 +110,8 @@ reset()
 
 init()
 {
-  if(g_CMFollower){
-    llListenRemove(lh);
-    lh = llListen(CHANNEL,"",llGetOwner(),"");
-  }
+  llListenRemove(lh);
+  lh = llListen(CHANNEL,"",llGetOwner(),"");
 }
 
 stopFollowing(string name)

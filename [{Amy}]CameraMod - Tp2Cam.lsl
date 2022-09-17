@@ -1,9 +1,6 @@
 key id;
 
-//NOTE (neu)
-integer g_CMTPCAM       = FALSE;
-
-string objName = "[{Amy}]Camera Mod v3 - Teleporter";
+string objName = "[{Amy}]Camera Mod v3 - TP2CAM";
 
 doTeleport(key id)
 {
@@ -15,9 +12,6 @@ default
     state_entry()
     {
         llSetObjectName(objName);
-        if(g_CMTPCAM){
-            //!
-        }
     }
 
     changed(integer change)

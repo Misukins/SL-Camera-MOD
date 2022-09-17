@@ -10,11 +10,8 @@ integer pageLen;
 integer minPage;
 integer maxPage;
 
-//NOTE (neu)
-integer g_CMTPAVI       = FALSE;
-
 string objOwner;
-string objName = "[{Amy}]Camera Mod v3 - Teleporter";
+string objName = "[{Amy}]Camera Mod v3 - TP2AVI";
 
 list agentKeys;
 list agentNames;
@@ -90,12 +87,10 @@ state RDY
 {
     state_entry()
     {
-        if(g_CMTPAVI){
-            llSetObjectName(objName);
-            objOwner = llGetOwner();
-            objChan = 1 + (integer)llFrand(16777216);
-            lsn = llListen(objChan, "", objOwner, "");
-        }
+        llSetObjectName(objName);
+        objOwner = llGetOwner();
+        objChan = 1 + (integer)llFrand(16777216);
+        lsn = llListen(objChan, "", objOwner, "");
     }
 
     changed(integer change)

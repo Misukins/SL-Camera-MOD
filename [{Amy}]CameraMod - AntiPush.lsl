@@ -6,8 +6,7 @@ integer gUseMoveLock;
 integer gRelockMoveLockAfterMovement;
 integer gRelockIsUserMoving;
 
-//NOTE (neu)
-integer g_CMANTIPUSH    = FALSE;
+string objName = "[{Amy}]Camera Mod v3 - AntiPush";
 
 vector _redState    = <0.502, 0.000, 0.000>;
 vector _whiteState  = <1.000, 1.000, 1.000>;
@@ -36,11 +35,9 @@ default
 {
     state_entry()
     {
+        llSetObjectName(objName);
         llSetLinkColor(LINK_THIS, _whiteState, ALL_SIDES);
         llSetLinkTexture(LINK_THIS, unlocked, ALL_SIDES);
-        if(g_CMANTIPUSH){
-            //!
-        }
     }
     
     touch_start(integer total_number)
