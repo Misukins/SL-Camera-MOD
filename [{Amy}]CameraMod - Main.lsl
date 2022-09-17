@@ -50,42 +50,42 @@ info(string message)
 menu(key id)
 {
     if (cameraOn == FALSE){
-        list main_menu = [ "■ Off ■", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
+        list main_menu = [ "■ Off ■", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
     else if ((adultcamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "■ Adult ■", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "■ Adult ■", "□ Teen □", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
     else if ((teencamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "■ Teen ■", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "■ Teen ■", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
     else if ((childcamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "■ Child ■", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "■ Child ■", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
     else if ((petitecamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "■ Petite ■", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "■ Petite ■", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
     /* else if ((cinematiccamOn == TRUE) && (cameraOn == TRUE)){
-        list main_menu = [ "□ Off □", "■ Cinema ■", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
+        list main_menu = [ "□ Off □", "■ Cinema ■", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
@@ -339,30 +339,31 @@ default
         link_num = llGetNumberOfPrims();
         llSetObjectName(CAMERA_);
         llSitTarget(<0.0, 0.0, 0.1>, ZERO_ROTATION);
+        llSetLinkAlpha(_camera, 0.55, ALL_SIDES);
         llPreloadSound(_sound_on);
         llPreloadSound(_sound_off);
         determine_cameraMOD_links();
         if(g_CMFollower){
-            llSetLinkAlpha(_follower,   1,    ALL_SIDES);
+            llSetLinkAlpha(_follower, 0.55, ALL_SIDES);
             llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
         }
         else if (g_CMTPAVI){
-            llSetLinkAlpha(_tp2avi,     1,    ALL_SIDES);
+            llSetLinkAlpha(_tp2avi, 0.55, ALL_SIDES);
             llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
         }
         else if (g_CMTPCAM){
-            llSetLinkAlpha(_tp2cam,     1,    ALL_SIDES);
+            llSetLinkAlpha(_tp2cam, 0.55, ALL_SIDES);
             llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
         }
         else if (g_CMANTIPUSH){
-            llSetLinkAlpha(_antipush,   1,    ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0.55, ALL_SIDES);
             llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
         }
         else{
-            llSetLinkAlpha(_follower,   0,    ALL_SIDES);
-            llSetLinkAlpha(_tp2avi,     0,    ALL_SIDES);
-            llSetLinkAlpha(_tp2cam,     0,    ALL_SIDES);
-            llSetLinkAlpha(_antipush,   0,    ALL_SIDES);
+            llSetLinkAlpha(_follower, 0, ALL_SIDES);
+            llSetLinkAlpha(_tp2avi, 0, ALL_SIDES);
+            llSetLinkAlpha(_tp2cam, 0, ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0, ALL_SIDES);
             llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
@@ -417,7 +418,7 @@ default
                 llTriggerSound(_sound_off, 0.4);
                 reset_cam();
             }
-            else if (message == "† STOP †"){
+            else if (message == "† StopAnims †"){
                 llTriggerSound(_sound_on, 0.4);
                 state stopAnims;
             }
@@ -434,13 +435,13 @@ default
                 //llTriggerSound(_sound_on, 0.4);
                 if(!g_CMFollower){
                     g_CMFollower = TRUE;
-                    llSetLinkAlpha(_follower,   1,    ALL_SIDES);
+                    llSetLinkAlpha(_follower, 0.55, ALL_SIDES);
                     llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
                     llOwnerSay("Follower is On!");
                 }
                 else{
                     g_CMFollower = FALSE;
-                    llSetLinkAlpha(_follower,   0,    ALL_SIDES);
+                    llSetLinkAlpha(_follower, 0, ALL_SIDES);
                     llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                     llOwnerSay("Follower is Off!");
                 }
@@ -450,13 +451,13 @@ default
                 //llTriggerSound(_sound_on, 0.4);
                 if(!g_CMTPCAM){
                     g_CMTPCAM = TRUE;
-                    llSetLinkAlpha(_tp2cam,     1,    ALL_SIDES);
+                    llSetLinkAlpha(_tp2cam, 0.55, ALL_SIDES);
                     llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
                     llOwnerSay("Teleport to Camera is On!");
                 }
                 else{
                     g_CMTPCAM = FALSE;
-                    llSetLinkAlpha(_tp2cam,   0,    ALL_SIDES);
+                    llSetLinkAlpha(_tp2cam, 0, ALL_SIDES);
                     llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                     llOwnerSay("Teleport to Camera is Off!");
                 }
@@ -466,13 +467,13 @@ default
                 //llTriggerSound(_sound_on, 0.4);
                 if(!g_CMTPAVI){
                     g_CMTPAVI = TRUE;
-                    llSetLinkAlpha(_tp2avi,     1,    ALL_SIDES);
+                    llSetLinkAlpha(_tp2avi, 0.55, ALL_SIDES);
                     llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
                     llOwnerSay("Teleport to Avatar is On!");
                 }
                 else{
                     g_CMTPAVI = FALSE;
-                    llSetLinkAlpha(_tp2avi,   0,    ALL_SIDES);
+                    llSetLinkAlpha(_tp2avi, 0, ALL_SIDES);
                     llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                     llOwnerSay("Teleport to Avatar is Off!");
                 }
@@ -482,13 +483,13 @@ default
                 //llTriggerSound(_sound_on, 0.4);
                 if(!g_CMANTIPUSH){
                     g_CMANTIPUSH = TRUE;
-                    llSetLinkAlpha(_antipush,     1,    ALL_SIDES);
+                    llSetLinkAlpha(_antipush, 0.55, ALL_SIDES);
                     llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
                     llOwnerSay("AntiPush is On!");
                 }
                 else{
                     g_CMANTIPUSH = FALSE;
-                    llSetLinkAlpha(_antipush,   0,    ALL_SIDES);
+                    llSetLinkAlpha(_antipush, 0, ALL_SIDES);
                     llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                     llOwnerSay("AntiPush is Off!");
                 }
@@ -499,10 +500,10 @@ default
                 g_CMTPCAM       = TRUE;
                 g_CMTPAVI       = TRUE;
                 g_CMANTIPUSH    = TRUE;
-                llSetLinkAlpha(_follower,   1,    ALL_SIDES);
-                llSetLinkAlpha(_tp2cam,     1,    ALL_SIDES);
-                llSetLinkAlpha(_tp2avi,     1,    ALL_SIDES);
-                llSetLinkAlpha(_antipush,   1,    ALL_SIDES);
+                llSetLinkAlpha(_follower, 0.55, ALL_SIDES);
+                llSetLinkAlpha(_tp2cam, 0.55, ALL_SIDES);
+                llSetLinkAlpha(_tp2avi, 0.55, ALL_SIDES);
+                llSetLinkAlpha(_antipush, 0.55, ALL_SIDES);
                 llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
                 llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
                 llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
@@ -515,10 +516,10 @@ default
                 g_CMTPCAM       = FALSE;
                 g_CMTPAVI       = FALSE;
                 g_CMANTIPUSH    = FALSE;
-                llSetLinkAlpha(_follower,   0,    ALL_SIDES);
-                llSetLinkAlpha(_tp2cam,     0,    ALL_SIDES);
-                llSetLinkAlpha(_tp2avi,     0,    ALL_SIDES);
-                llSetLinkAlpha(_antipush,   0,    ALL_SIDES);
+                llSetLinkAlpha(_follower, 0, ALL_SIDES);
+                llSetLinkAlpha(_tp2cam, 0, ALL_SIDES);
+                llSetLinkAlpha(_tp2avi, 0, ALL_SIDES);
+                llSetLinkAlpha(_antipush, 0, ALL_SIDES);
                 llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
