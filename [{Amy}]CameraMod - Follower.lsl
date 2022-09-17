@@ -113,8 +113,10 @@ reset()
 
 init()
 {
-  llListenRemove(lh);
-  lh = llListen(CHANNEL,"",llGetOwner(),"");
+  if(g_CMFollower){
+    llListenRemove(lh);
+    lh = llListen(CHANNEL,"",llGetOwner(),"");
+  }
 }
 
 stopFollowing(string name)

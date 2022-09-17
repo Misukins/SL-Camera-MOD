@@ -15,6 +15,9 @@ default
     state_entry()
     {
         llSetObjectName(objName);
+        if(g_CMTPCAM){
+            //!
+        }
     }
 
     changed(integer change)

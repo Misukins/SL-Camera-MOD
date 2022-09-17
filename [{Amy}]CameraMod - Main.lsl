@@ -233,6 +233,8 @@ petite_cam()
     cinematiccamOn  = FALSE;
 }
 
+/* 
+!TODO
 sitting()
 {
     string curAnimState = llGetAnimation(llGetOwner());
@@ -269,11 +271,58 @@ sit_cam()
     sitcamOn        = TRUE;
     cinematiccamOn  = FALSE;
 }
+*/
 
 reset_cam()
 {
     info("Camera Reset.");
     llResetScript();
+}
+
+features()
+{
+    //TODO
+    /*
+    g_CMFollower
+    g_CMTPCAM
+    g_CMANTIPUSH
+    g_CMTPAVI
+    */
+    if (g_CMFollower){
+        list main_menu = [ "■ Follower ■", "□ TP2Cam □", "□ TP2Avi □", "□ AntiPush □", "† Back †", "† Exit †" ];
+        llListenRemove(listener);
+        channel = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(channel, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, channel);
+    }
+    else if (g_CMTPCAM){
+        list main_menu = [ "□ Follower □", "■ TP2Cam ■", "□ TP2Avi □", "□ AntiPush □", "† Back †", "† Exit †" ];
+        llListenRemove(listener);
+        channel = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(channel, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, channel);
+    }
+    else if (g_CMTPAVI){
+        list main_menu = [ "□ Follower □", "□ TP2Cam □", "■ TP2Avi ■", "□ AntiPush □", "† Back †", "† Exit †" ];
+        llListenRemove(listener);
+        channel = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(channel, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, channel);
+    }
+    else if (g_CMANTIPUSH){
+        list main_menu = [ "□ Follower □", "□ TP2Cam □", "□ TP2Avi □", "■ AntiPush ■", "† Back †", "† Exit †" ];
+        llListenRemove(listener);
+        channel = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(channel, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, channel);
+    }
+    else{
+        list main_menu = [ "□ Follower □", "□ TP2Cam □", "□ TP2Avi □", "□ AntiPush □", "† Back †", "† Exit †" ];
+        llListenRemove(listener);
+        channel = -1000000000 - (integer)(llFrand(1000000000));
+        listener = llListen(channel, "", "", "");
+        llDialog(id, "Choose an option...", main_menu, channel);
+    }
 }
 
 default
@@ -338,8 +387,12 @@ default
             }
             else if (messafe == "† Features †"){
                 llTriggerSound(_sound_on, 0.4);
-                return;
+                features();
             }
+            □ Follower □
+            □ TP2Cam □
+            □ TP2Avi □
+            □ AntiPush □
             else{
                 llTriggerSound(_sound_on, 0.4);
                 return;

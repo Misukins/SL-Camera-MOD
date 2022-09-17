@@ -38,6 +38,9 @@ default
     {
         llSetLinkColor(LINK_THIS, _whiteState, ALL_SIDES);
         llSetLinkTexture(LINK_THIS, unlocked, ALL_SIDES);
+        if(g_CMANTIPUSH){
+            //!
+        }
     }
     
     touch_start(integer total_number)

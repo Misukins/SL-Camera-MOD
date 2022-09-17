@@ -90,10 +90,12 @@ state RDY
 {
     state_entry()
     {
-        llSetObjectName(objName);
-        objOwner = llGetOwner();
-        objChan = 1 + (integer)llFrand(16777216);
-        lsn = llListen(objChan, "", objOwner, "");
+        if(g_CMTPAVI){
+            llSetObjectName(objName);
+            objOwner = llGetOwner();
+            objChan = 1 + (integer)llFrand(16777216);
+            lsn = llListen(objChan, "", objOwner, "");
+        }
     }
 
     changed(integer change)
