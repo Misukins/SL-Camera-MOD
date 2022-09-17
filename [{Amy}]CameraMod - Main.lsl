@@ -10,7 +10,7 @@ integer adultcamOn          = FALSE;
 integer teencamOn           = FALSE;
 integer childcamOn          = FALSE;
 integer petitecamOn         = FALSE;
-integer cinematiccamOn      = FALSE;
+//integer cinematiccamOn      = FALSE;  //!UNUSED
 integer sitcamOn            = FALSE;
 //integer sitOverride       = FALSE; // COMING SOON!!!!
 
@@ -49,48 +49,48 @@ info(string message)
 
 menu(key id)
 {
-    if (cameraOn){
+    if (cameraOn == FALSE){
         list main_menu = [ "■ Off ■", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
-    else if ((adultcamOn) && (cameraOn)){
+    else if ((adultcamOn == TRUE) && (cameraOn == TRUE)){
         list main_menu = [ "□ Off □", "□ Cinema □", "■ Adult ■", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
-    else if ((teencamOn) && (cameraOn)){
+    else if ((teencamOn == TRUE) && (cameraOn == TRUE)){
         list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "■ Teen ■", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
-    else if ((childcamOn) && (cameraOn)){
+    else if ((childcamOn == TRUE) && (cameraOn == TRUE)){
         list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "■ Child ■", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
-    else if ((petitecamOn) && (cameraOn)){
+    else if ((petitecamOn == TRUE) && (cameraOn == TRUE)){
         list main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "■ Petite ■", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
-    else if ((cinematiccamOn) && (cameraOn)){
+    /* else if ((cinematiccamOn == TRUE) && (cameraOn == TRUE)){
         list main_menu = [ "□ Off □", "■ Cinema ■", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† STOP †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
-    }
+    } */
 }
 
 default_cam()
@@ -109,7 +109,7 @@ off_cam()
     cameraOn = FALSE;
 }
 
-cinematic_cam()
+/* cinematic_cam()
 {
     vector camPos = llGetPos();
     vector camFocus = llGetPos();
@@ -130,7 +130,7 @@ cinematic_cam()
     petitecamOn     = FALSE;
     sitcamOn        = FALSE;
     cinematiccamOn  = TRUE;
-}
+} */
 
 adult_cam()
 {
@@ -157,7 +157,7 @@ adult_cam()
     childcamOn      = FALSE;
     petitecamOn     = FALSE;
     sitcamOn        = FALSE;
-    cinematiccamOn  = FALSE;
+    //cinematiccamOn  = FALSE; //!UNUSED
 }
 
 teen_cam()
@@ -185,7 +185,7 @@ teen_cam()
     childcamOn      = FALSE;
     petitecamOn     = FALSE;
     sitcamOn        = FALSE;
-    cinematiccamOn  = FALSE;
+    //cinematiccamOn  = FALSE; //!UNUSED
 }
 
 child_cam()
@@ -213,7 +213,7 @@ child_cam()
     childcamOn      = TRUE;
     petitecamOn     = FALSE;
     sitcamOn        = FALSE;
-    cinematiccamOn  = FALSE;
+    //cinematiccamOn  = FALSE; //!UNUSED
 }
 
 petite_cam()
@@ -241,7 +241,7 @@ petite_cam()
     childcamOn      = FALSE;
     petitecamOn     = TRUE;
     sitcamOn        = FALSE;
-    cinematiccamOn  = FALSE;
+    //cinematiccamOn  = FALSE; //!UNUSED
 }
 
 /* 
@@ -280,7 +280,7 @@ sit_cam()
     childcamOn      = FALSE;
     petitecamOn     = FALSE;
     sitcamOn        = TRUE;
-    cinematiccamOn  = FALSE;
+    //cinematiccamOn  = FALSE; //!UNUSED
 }
 */
 
@@ -292,49 +292,15 @@ reset_cam()
 
 features(key id)
 {
-    //TODO !TEMP
-    if ((g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM) && (g_CMANTIPUSH)){
-        list main_menu = [ "■ Follower ■", "■ TP2Cam ■", "■ TP2Avi ■", "■ AntiPush ■", "† Back †", "† Exit †" ];
-        llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
-    }
-    else if ((g_CMFollower) && (!g_CMTPAVI) && (!g_CMTPCAM) && (!g_CMANTIPUSH)){
-        list main_menu = [ "■ Follower ■", "□ TP2Cam □", "□ TP2Avi □", "□ AntiPush □", "† Back †", "† Exit †" ];
-        llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
-    }
-    else if ((!g_CMFollower) && (!g_CMTPAVI) && (g_CMTPCAM) && (!g_CMANTIPUSH)){
-        list main_menu = [ "□ Follower □", "■ TP2Cam ■", "□ TP2Avi □", "□ AntiPush □", "† Back †", "† Exit †" ];
-        llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
-    }
-    else if ((!g_CMFollower) && (g_CMTPAVI) && (!g_CMTPCAM) && (!g_CMANTIPUSH)){
-        list main_menu = [ "□ Follower □", "□ TP2Cam □", "■ TP2Avi ■", "□ AntiPush □", "† Back †", "† Exit †" ];
-        llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
-    }
-    else if ((!g_CMFollower) && (!g_CMTPAVI) && (!g_CMTPCAM) && (g_CMANTIPUSH)){
-        list main_menu = [ "□ Follower □", "□ TP2Cam □", "□ TP2Avi □", "■ AntiPush ■", "† Back †", "† Exit †" ];
-        llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
-    }
-    else{
-        list main_menu = [ "□ Follower □", "□ TP2Cam □", "□ TP2Avi □", "□ AntiPush □", "† Back †", "† Exit †" ];
-        llListenRemove(listener);
-        channel = -1000000000 - (integer)(llFrand(1000000000));
-        listener = llListen(channel, "", "", "");
-        llDialog(id, "Choose an option...", main_menu, channel);
-    }
+    list main_menu = [];
+    if((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM))
+        main_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ AntiPush", "√ Everything", "† Back †", "† Exit †" ];
+    else
+        main_menu = [ "Follower", "TP2Cam", "TP2Avi", "AntiPush", "Everything", "† Back †", "† Exit †" ];
+    llListenRemove(listener);
+    channel = -1000000000 - (integer)(llFrand(1000000000));
+    listener = llListen(channel, "", "", "");
+    llDialog(id, "Choose an option...", main_menu, channel);
 }
 
 determine_cameraMOD_links()
@@ -435,11 +401,11 @@ default
                 llTriggerSound(_sound_on, 0.4);
                 return;
             }
-            else if (message == "□ Cinema □"){
+            /*else if (message == "□ Cinema □"){
                 cinematic_cam();
                 llTriggerSound(_sound_on, 0.4);
                 return;
-            }
+            }*/
             else if (message == "□ Off □"){
                 off_cam();
                 llTriggerSound(_sound_on, 0.4);
@@ -447,7 +413,7 @@ default
             }
             else if (message == "† Reset †"){
                 llMessageLinked(LINK_SET, 0, "RESET", NULL_KEY);
-                llTriggerSound(_sound_on, 0.4);
+                llTriggerSound(_sound_off, 0.4);
                 reset_cam();
             }
             else if (message == "† STOP †"){
@@ -463,104 +429,104 @@ default
                 llTriggerSound(_sound_on, 0.4);
                 features(id);
             }
-            else if (message == "□ Follower □"){ //TODO just temp 4 testing
+            else if ((message == "Follower") || (message == "√ Follower")){
                 //llTriggerSound(_sound_on, 0.4);
+                if(!g_CMFollower){
+                    g_CMFollower = TRUE;
+                    llSetLinkAlpha(_follower,   1,    ALL_SIDES);
+                    llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
+                    llOwnerSay("Follower is On!");
+                }
+                else{
+                    g_CMFollower = FALSE;
+                    llSetLinkAlpha(_follower,   0,    ALL_SIDES);
+                    llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                    llOwnerSay("Follower is Off!");
+                }
+                features(id);
+            }
+            else if ((message == "TP2Cam") || (message == "√ TP2Cam")){
+                //llTriggerSound(_sound_on, 0.4);
+                if(!g_CMTPCAM){
+                    g_CMTPCAM = TRUE;
+                    llSetLinkAlpha(_tp2cam,     1,    ALL_SIDES);
+                    llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
+                    llOwnerSay("Teleport to Camera is On!");
+                }
+                else{
+                    g_CMTPCAM = FALSE;
+                    llSetLinkAlpha(_tp2cam,   0,    ALL_SIDES);
+                    llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                    llOwnerSay("Teleport to Camera is Off!");
+                }
+                features(id);
+            }
+            else if ((message == "TP2Avi") || (message == "√ TP2Avi")){
+                //llTriggerSound(_sound_on, 0.4);
+                if(!g_CMTPAVI){
+                    g_CMTPAVI = TRUE;
+                    llSetLinkAlpha(_tp2avi,     1,    ALL_SIDES);
+                    llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
+                    llOwnerSay("Teleport to Avatar is On!");
+                }
+                else{
+                    g_CMTPAVI = FALSE;
+                    llSetLinkAlpha(_tp2avi,   0,    ALL_SIDES);
+                    llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                    llOwnerSay("Teleport to Avatar is Off!");
+                }
+                features(id);
+            }
+            else if ((message == "AntiPush") || (message == "√ AntiPush")){
+                //llTriggerSound(_sound_on, 0.4);
+                if(!g_CMANTIPUSH){
+                    g_CMANTIPUSH = TRUE;
+                    llSetLinkAlpha(_antipush,     1,    ALL_SIDES);
+                    llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
+                    llOwnerSay("AntiPush is On!");
+                }
+                else{
+                    g_CMANTIPUSH = FALSE;
+                    llSetLinkAlpha(_antipush,   0,    ALL_SIDES);
+                    llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                    llOwnerSay("AntiPush is Off!");
+                }
+                features(id);
+            }
+            else if (message == "Everything"){
                 g_CMFollower    = TRUE;
-                g_CMTPCAM       = FALSE;
-                g_CMANTIPUSH    = FALSE;
-                g_CMTPAVI       = FALSE;
-                if(g_CMFollower){
-                    llSetLinkAlpha(_follower,   1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
-                }
-                else if (g_CMTPAVI){
-                    llSetLinkAlpha(_tp2avi,     1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
-                }
-                else if (g_CMTPCAM){
-                    llSetLinkAlpha(_tp2cam,     1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
-                }
-                else if (g_CMANTIPUSH){
-                    llSetLinkAlpha(_antipush,   1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
-                }
-                features(id);
-            }
-            else if (message == "□ TP2Cam □"){ //TODO just temp 4 testing
-                //llTriggerSound(_sound_on, 0.4);
-                g_CMFollower    = FALSE;
                 g_CMTPCAM       = TRUE;
-                g_CMANTIPUSH    = FALSE;
-                g_CMTPAVI       = FALSE;
-                if(g_CMFollower){
-                    llSetLinkAlpha(_follower,   1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
-                }
-                else if (g_CMTPAVI){
-                    llSetLinkAlpha(_tp2avi,     1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
-                }
-                else if (g_CMTPCAM){
-                    llSetLinkAlpha(_tp2cam,     1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
-                }
-                else if (g_CMANTIPUSH){
-                    llSetLinkAlpha(_antipush,   1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
-                }
-                features(id);
-            }
-            else if (message == "□ TP2Avi □"){ //TODO just temp 4 testing
-                //llTriggerSound(_sound_on, 0.4);
-                g_CMFollower    = FALSE;
-                g_CMTPCAM       = FALSE;
-                g_CMANTIPUSH    = FALSE;
                 g_CMTPAVI       = TRUE;
-                if(g_CMFollower){
-                    llSetLinkAlpha(_follower,   1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
-                }
-                else if (g_CMTPAVI){
-                    llSetLinkAlpha(_tp2avi,     1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
-                }
-                else if (g_CMTPCAM){
-                    llSetLinkAlpha(_tp2cam,     1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
-                }
-                else if (g_CMANTIPUSH){
-                    llSetLinkAlpha(_antipush,   1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
-                }
-                features(id);
+                g_CMANTIPUSH    = TRUE;
+                llSetLinkAlpha(_follower,   1,    ALL_SIDES);
+                llSetLinkAlpha(_tp2cam,     1,    ALL_SIDES);
+                llSetLinkAlpha(_tp2avi,     1,    ALL_SIDES);
+                llSetLinkAlpha(_antipush,   1,    ALL_SIDES);
+                llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
+                llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
+                llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
+                llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
+                llOwnerSay("Every Features are on!");
+                menu(id);
             }
-            else if (message == "□ AntiPush □"){ //TODO just temp 4 testing
-                //llTriggerSound(_sound_on, 0.4);
+            else if (message == "√ Everything"){
                 g_CMFollower    = FALSE;
                 g_CMTPCAM       = FALSE;
-                g_CMANTIPUSH    = TRUE;
                 g_CMTPAVI       = FALSE;
-                if(g_CMFollower){
-                    llSetLinkAlpha(_follower,   1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
-                }
-                else if (g_CMTPAVI){
-                    llSetLinkAlpha(_tp2avi,     1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
-                }
-                else if (g_CMTPCAM){
-                    llSetLinkAlpha(_tp2cam,     1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
-                }
-                else if (g_CMANTIPUSH){
-                    llSetLinkAlpha(_antipush,   1,    ALL_SIDES);
-                    llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
-                }
-                features(id);
+                g_CMANTIPUSH    = FALSE;
+                llSetLinkAlpha(_follower,   0,    ALL_SIDES);
+                llSetLinkAlpha(_tp2cam,     0,    ALL_SIDES);
+                llSetLinkAlpha(_tp2avi,     0,    ALL_SIDES);
+                llSetLinkAlpha(_antipush,   0,    ALL_SIDES);
+                llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                llOwnerSay("Every Features are off!");
+                menu(id);
             }
             else{
-                llTriggerSound(_sound_on, 0.4);
+                llTriggerSound(_sound_off, 0.4);
                 return;
             }
         }
@@ -596,8 +562,8 @@ default
                     child_cam();
                 else if (petitecamOn == TRUE)
                     petite_cam();
-                else if(cinematiccamOn == TRUE)
-                    cinematic_cam();
+                /* else if(cinematiccamOn == TRUE)
+                    cinematic_cam(); */
                 else
                     off_cam();
             }
@@ -616,8 +582,8 @@ default
                 child_cam();
             else if (petitecamOn == TRUE)
                 petite_cam();
-            else if(cinematiccamOn == TRUE)
-                cinematic_cam();
+            /* else if(cinematiccamOn == TRUE)
+                cinematic_cam(); */
             else
                 off_cam();
         }
@@ -633,8 +599,7 @@ state stopAnims
 
     run_time_permissions(integer perm)
     {
-        if (perm & PERMISSION_TRIGGER_ANIMATION)
-        {
+        if (perm & PERMISSION_TRIGGER_ANIMATION){
             list anims = llGetAnimationList(llGetOwner());
             integer n;
             for(n = 0; n < llGetListLength(anims) ;n++){
