@@ -401,11 +401,12 @@ default
                 llTriggerSound(_sound_on, 0.4);
                 return;
             }
-            /*else if (message == "□ Cinema □"){
-                cinematic_cam();
-                llTriggerSound(_sound_on, 0.4);
+            else if (message == "□ Cinema □"){
+                /* cinematic_cam();
+                llTriggerSound(_sound_on, 0.4); */
+                llOwnerSay(".... SRY .... Coming soon....");
                 return;
-            }*/
+            }
             else if (message == "□ Off □"){
                 off_cam();
                 llTriggerSound(_sound_on, 0.4);
