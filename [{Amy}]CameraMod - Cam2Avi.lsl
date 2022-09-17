@@ -9,6 +9,7 @@ integer page;
 integer pageLen;
 integer minPage;
 integer maxPage;
+integer lockedOn;
 
 string objOwner;
 string objName = "[{Amy}]Camera Mod v3 - Cam2Avi";
@@ -55,16 +56,36 @@ string cbcAgentName(string agentKey)
     return agentName;
 }
 
+lookAtAv(vector targetPos)
+{
+    llSetCameraParams([
+        CAMERA_ACTIVE, 1, // 1 is active, 0 is inactive
+        CAMERA_BEHINDNESS_ANGLE, 10.0, // (0 to 180) degrees
+        CAMERA_BEHINDNESS_LAG, 0.0, // (0 to 3) seconds
+        CAMERA_DISTANCE, 3.0, // ( 0.5 to 10) meters
+        // CAMERA_FOCUS, <0,0,0>, // region-relative position
+        CAMERA_FOCUS_LAG, 0.1 , // (0 to 3) seconds
+        CAMERA_FOCUS_LOCKED, FALSE, // (TRUE or FALSE)
+        CAMERA_FOCUS_THRESHOLD, 1.0, // (0 to 4) meters
+        CAMERA_PITCH, 0.0, // (-45 to 80) degrees
+        CAMERA_POSITION, targetPos, // region-relative position
+        CAMERA_POSITION_LAG, 0.1, // (0 to 3) seconds
+        CAMERA_POSITION_LOCKED, FALSE, // (TRUE or FALSE)
+        CAMERA_POSITION_THRESHOLD, 1.0, // (0 to 4) meters
+        CAMERA_FOCUS_OFFSET, ZERO_VECTOR // <-10,-10,-10> to <10,10,10> meters
+    ]);
+}
+
 default
 {
     state_entry()
     {
-        llRequestPermissions(llGetOwner(), PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA);
+        llRequestPermissions(llGetOwner(), PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA);
     }
 
     run_time_permissions(integer perm)
     {
-        if (perm & (PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA))
+        if (perm & (PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA))
             state RDY;
         else
            llResetScript();
@@ -72,8 +93,10 @@ default
 
     link_message(integer from,integer to,string msg,key id)
     {
-      if (msg == "RESET")
+      if (msg == "RESET"){
+          llOwnerSay("Resetting - Cam2Avi Script!");
           llResetScript();
+        }
     }
 
     changed(integer change)
@@ -101,39 +124,46 @@ state RDY
 
     touch_start(integer total_num)
     {
-        list targets;
-        string agentKey;
-        string agentName;
-        agentNames = [];
-        agentKeys = llGetAgentList(AGENT_LIST_REGION, []);
-        agentTotal = llGetListLength(agentKeys);
-        page = 0;
-        integer i;
-        for (i = 0; i < agentTotal; i++){
-            agentKey = llList2Key(agentKeys, i);
-            agentName = llToLower(cbcAgentName(agentKey));
-            if (llGetAgentSize(agentKey) != ZERO_VECTOR && agentName != "" && agentKey != llGetOwner())
-                targets += [agentName, agentKey];
-        }
-        targets = llListSort(targets, 2, TRUE);
-        agentKeys = llList2ListStrided(llDeleteSubList(targets, 0, 0), 0, -1, 2);
-        agentTotal = llGetListLength(agentKeys);
-        if (agentTotal <= maxDialogButtons)
-            controls = [];
-        else
-            controls = menuControls;
-        pageLen = maxDialogButtons - llGetListLength(controls);
-        maxPage = llCeil(agentTotal / pageLen);
-        if (agentTotal % pageLen == 0)
-            maxPage--;
-        for (i = 0; i < agentTotal; i++){
-            agentKey = llList2Key(agentKeys, i);
+        if(!lockedOn){
+            list targets;
+            string agentKey;
             string agentName;
-            agentName = cbcAgentName(agentKey);
-            agentName = llGetSubString(agentName, 0, maxDialogStringLength - 1);
-            agentNames += [agentName];
+            agentNames = [];
+            agentKeys = llGetAgentList(AGENT_LIST_REGION, []);
+            agentTotal = llGetListLength(agentKeys);
+            page = 0;
+            integer i;
+            for (i = 0; i < agentTotal; i++){
+                agentKey = llList2Key(agentKeys, i);
+                agentName = llToLower(cbcAgentName(agentKey));
+                if (llGetAgentSize(agentKey) != ZERO_VECTOR && agentName != "" && agentKey != llGetOwner())
+                    targets += [agentName, agentKey];
+            }
+            targets = llListSort(targets, 2, TRUE);
+            agentKeys = llList2ListStrided(llDeleteSubList(targets, 0, 0), 0, -1, 2);
+            agentTotal = llGetListLength(agentKeys);
+            if (agentTotal <= maxDialogButtons)
+                controls = [];
+            else
+                controls = menuControls;
+            pageLen = maxDialogButtons - llGetListLength(controls);
+            maxPage = llCeil(agentTotal / pageLen);
+            if (agentTotal % pageLen == 0)
+                maxPage--;
+            for (i = 0; i < agentTotal; i++){
+                agentKey = llList2Key(agentKeys, i);
+                string agentName;
+                agentName = cbcAgentName(agentKey);
+                agentName = llGetSubString(agentName, 0, maxDialogStringLength - 1);
+                agentNames += [agentName];
+            }
+            lockedOn = TRUE;
+            cbcDisplayPage();
         }
-        cbcDisplayPage();
+        else
+            lockedOn = FALSE;
+
+        lockedOn = !lockedOn;
     }
 
     listen(integer channel, string name, key id, string msg)
@@ -161,10 +191,23 @@ state RDY
                     list answer = llGetObjectDetails(agentKey, [OBJECT_POS]);
                     vector targetPos = llList2Vector(answer, 0);
                     float dist = llVecDist(targetPos,llGetPos());
+                    
+                    lookAtAv(targetPos);
+                    lockedOn = TRUE;
                     //llTeleportAgent(objOwner, "", targetPos, <0.0, 0.0, 0.0>);
-                    llTargetRemove(0);
-                    llStopMoveToTarget();
+                    //llTargetRemove(0);
+                    //llStopMoveToTarget();
+
+                    //vector CamPos = llGetCameraPos();
+                    //rotation CamRot = llGetCameraRot();
+                    //vector CamFoc = CamPos + llRot2Fwd(CamRot);
+                    //llTeleportAgent(id, "", CamPos, CamFoc);
+
+
+
                 }
+                else
+                    lockedOn = FALSE;
             }
         }
     }
