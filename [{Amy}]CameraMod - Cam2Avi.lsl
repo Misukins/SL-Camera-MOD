@@ -80,12 +80,12 @@ default
 {
     state_entry()
     {
-        llRequestPermissions(llGetOwner(), PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA);
+        llRequestPermissions(llGetOwner(), PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA);
     }
 
     run_time_permissions(integer perm)
     {
-        if (perm & (PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA))
+        if (perm & (PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA))
             state RDY;
         else
            llResetScript();
