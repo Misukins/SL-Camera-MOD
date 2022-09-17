@@ -14,7 +14,6 @@ integer petitecamOn         = FALSE;
 integer sitcamOn            = FALSE;
 //integer sitOverride       = FALSE; // COMING SOON!!!!
 
-//NOTE (neu) COMING SOON I HOPE
 integer g_CMFollower        = FALSE;
 integer g_CMTPCAM           = FALSE;
 integer g_CMANTIPUSH        = FALSE;
@@ -84,13 +83,28 @@ menu(key id)
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
     }
-    /* else if ((cinematiccamOn == TRUE) && (cameraOn == TRUE)){
+    /*
+    else if ((cinematiccamOn == TRUE) && (cameraOn == TRUE)){
         list main_menu = [ "□ Off □", "■ Cinema ■", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
         llListenRemove(listener);
         channel = -1000000000 - (integer)(llFrand(1000000000));
         listener = llListen(channel, "", "", "");
         llDialog(id, "Choose an option...", main_menu, channel);
-    } */
+    }
+    */
+}
+
+features(key id)
+{
+    list main_menu = [];
+    if((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM))
+        main_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ AntiPush", "√ Everything", "† Back †", "† Exit †" ];
+    else
+        main_menu = [ "Follower", "TP2Cam", "TP2Avi", "AntiPush", "Everything", "† Back †", "† Exit †" ];
+    llListenRemove(listener);
+    channel = -1000000000 - (integer)(llFrand(1000000000));
+    listener = llListen(channel, "", "", "");
+    llDialog(id, "Choose an option...", main_menu, channel);
 }
 
 default_cam()
@@ -109,7 +123,8 @@ off_cam()
     cameraOn = FALSE;
 }
 
-/* cinematic_cam()
+/*
+cinematic_cam()
 {
     vector camPos = llGetPos();
     vector camFocus = llGetPos();
@@ -130,7 +145,8 @@ off_cam()
     petitecamOn     = FALSE;
     sitcamOn        = FALSE;
     cinematiccamOn  = TRUE;
-} */
+}
+*/
 
 adult_cam()
 {
@@ -290,19 +306,6 @@ reset_cam()
     llResetScript();
 }
 
-features(key id)
-{
-    list main_menu = [];
-    if((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM))
-        main_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ AntiPush", "√ Everything", "† Back †", "† Exit †" ];
-    else
-        main_menu = [ "Follower", "TP2Cam", "TP2Avi", "AntiPush", "Everything", "† Back †", "† Exit †" ];
-    llListenRemove(listener);
-    channel = -1000000000 - (integer)(llFrand(1000000000));
-    listener = llListen(channel, "", "", "");
-    llDialog(id, "Choose an option...", main_menu, channel);
-}
-
 determine_cameraMOD_links()
 {
     integer i = link_num;
@@ -403,8 +406,10 @@ default
                 return;
             }
             else if (message == "□ Cinema □"){
-                /* cinematic_cam();
-                llTriggerSound(_sound_on, 0.4); */
+            /*
+                cinematic_cam();
+                llTriggerSound(_sound_on, 0.4);
+            */
                 llOwnerSay(".... SRY .... Coming soon....");
                 return;
             }
@@ -546,8 +551,6 @@ default
 
     changed(integer change)
     {
-        //if (change & CHANGED_OWNER)
-        //    llResetScript();
         if (change & CHANGED_LINK){
             key agent = llAvatarOnSitTarget();
             if (agent){
@@ -564,8 +567,10 @@ default
                     child_cam();
                 else if (petitecamOn == TRUE)
                     petite_cam();
-                /* else if(cinematiccamOn == TRUE)
-                    cinematic_cam(); */
+            /*
+                else if(cinematiccamOn == TRUE)
+                    cinematic_cam();
+            */
                 else
                     off_cam();
             }
@@ -584,8 +589,10 @@ default
                 child_cam();
             else if (petitecamOn == TRUE)
                 petite_cam();
-            /* else if(cinematiccamOn == TRUE)
-                cinematic_cam(); */
+        /*
+            else if(cinematiccamOn == TRUE)
+                cinematic_cam();
+        */
             else
                 off_cam();
         }
