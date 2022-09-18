@@ -1,10 +1,10 @@
 integer agentTotal;
-integer targetIndex = -1;
+integer targetIndex             = -1;
 integer objChan;
-integer interval = 60;
+integer interval                = 60;
 integer lsn;
-integer maxDialogButtons = 12;
-integer maxDialogStringLength = 24;
+integer maxDialogButtons        = 12;
+integer maxDialogStringLength   = 24;
 integer page;
 integer pageLen;
 integer minPage;
@@ -12,12 +12,22 @@ integer maxPage;
 integer lockedOn;
 
 string objOwner;
-string objName = "[{Amy}]Camera Mod v3 - Cam2Avi";
+string objName                  = "[{Amy}]Camera Mod v3.1 - Cam2Avi";
 
 list agentKeys;
 list agentNames;
 list controls;
-list menuControls = ["←", "→"];
+list menuControls               = ["←", "→"];
+
+integer DEBUG = TRUE;
+
+vector _greenState              = <0.000, 0.502, 0.000>;
+vector _redState                = <0.502, 0.000, 0.000>;
+
+debug(string message)
+{
+     llOwnerSay("[DEBUG] " + message);
+}
 
 cbcDisplayPage()
 {
@@ -56,24 +66,35 @@ string cbcAgentName(string agentKey)
     return agentName;
 }
 
-lookAtAv(vector targetPos)
+lookAtAv(string agentKey, vector targetPos)
 {
+    list target_name = llParseString2List(llGetDisplayName(agentKey), [""], []);
     llSetCameraParams([
         CAMERA_ACTIVE, 1, // 1 is active, 0 is inactive
-        CAMERA_BEHINDNESS_ANGLE, 10.0, // (0 to 180) degrees
+        CAMERA_BEHINDNESS_ANGLE, 90.0, // (0 to 180) degrees
         CAMERA_BEHINDNESS_LAG, 0.0, // (0 to 3) seconds
-        CAMERA_DISTANCE, 3.0, // ( 0.5 to 10) meters
-        // CAMERA_FOCUS, <0,0,0>, // region-relative position
-        CAMERA_FOCUS_LAG, 0.1 , // (0 to 3) seconds
-        CAMERA_FOCUS_LOCKED, FALSE, // (TRUE or FALSE)
+        CAMERA_DISTANCE, 2.0, // ( 0.5 to 10) meters
+        CAMERA_FOCUS, targetPos, // region-relative position
+        CAMERA_FOCUS_LAG, 1.5, // (0 to 3) seconds
+        CAMERA_FOCUS_LOCKED, TRUE, // (TRUE or FALSE)
         CAMERA_FOCUS_THRESHOLD, 1.0, // (0 to 4) meters
         CAMERA_PITCH, 0.0, // (-45 to 80) degrees
-        CAMERA_POSITION, targetPos, // region-relative position
-        CAMERA_POSITION_LAG, 0.1, // (0 to 3) seconds
+        CAMERA_POSITION, <0, 0, 0>, // region-relative position
+        CAMERA_POSITION_LAG, 0.3, // (0 to 3) seconds
         CAMERA_POSITION_LOCKED, FALSE, // (TRUE or FALSE)
-        CAMERA_POSITION_THRESHOLD, 1.0, // (0 to 4) meters
-        CAMERA_FOCUS_OFFSET, ZERO_VECTOR // <-10,-10,-10> to <10,10,10> meters
+        CAMERA_POSITION_THRESHOLD, 2.0, // (0 to 4) meters
+        CAMERA_FOCUS_OFFSET, <2, 3, 0> // <-10,-10,-10> to <10,10,10> meters
     ]);
+    llOwnerSay("You are now perving " + (string)target_name + ". (secondlife:///app/agent/" + (string)agentKey + "/about)" );
+    llSetLinkColor(LINK_THIS, _greenState, ALL_SIDES);
+}
+
+stop()
+{
+    llOwnerSay("Perv Cam resetted!");
+    llSetCameraParams([CAMERA_ACTIVE, 0]);
+    llClearCameraParams();
+    llSetLinkColor(LINK_THIS, _redState, ALL_SIDES);
 }
 
 default
@@ -110,10 +131,22 @@ state RDY
 {
     state_entry()
     {
+        llSetLinkColor(LINK_THIS, _redState, ALL_SIDES);
         llSetObjectName(objName);
         objOwner = llGetOwner();
         objChan = 1 + (integer)llFrand(16777216);
         lsn = llListen(objChan, "", objOwner, "");
+        if(DEBUG){
+            if(!lockedOn)
+                llSetText("OFFFFFF", <1.0, 1.0, 0.0>, 1);
+            else
+                llSetText("ONNNNN", <1.0, 1.0, 0.0>, 1);
+        }
+
+        if(DEBUG){
+            string maker = "secondlife:///app/agent/1ffac40f-b1ea-41f9-b576-1993b96e36b2/about";
+            debug("This script needs testing so report them to\n" + (string)maker + "\nThank you!");
+        }
     }
 
     changed(integer change)
@@ -124,6 +157,11 @@ state RDY
 
     touch_start(integer total_num)
     {
+        if(DEBUG){
+            string maker = "secondlife:///app/agent/1ffac40f-b1ea-41f9-b576-1993b96e36b2/about";
+            debug("This script needs testing so report them to\n" + (string)maker + "\nThank you!");
+        }
+        
         if(!lockedOn){
             list targets;
             string agentKey;
@@ -159,11 +197,15 @@ state RDY
             }
             lockedOn = TRUE;
             cbcDisplayPage();
+            if(DEBUG)
+                llSetText("ONNNNN", <1.0, 1.0, 0.0>, 1);
         }
-        else
+        else{
+            if(DEBUG)
+                llSetText("OFFFFFF", <1.0, 1.0, 0.0>, 1);
+            stop();
             lockedOn = FALSE;
-
-        lockedOn = !lockedOn;
+        }
     }
 
     listen(integer channel, string name, key id, string msg)
@@ -190,9 +232,9 @@ state RDY
                     string agentKey = llList2Key(agentKeys, targetIndex);
                     list answer = llGetObjectDetails(agentKey, [OBJECT_POS]);
                     vector targetPos = llList2Vector(answer, 0);
-                    float dist = llVecDist(targetPos,llGetPos());
+                    //float dist = llVecDist(targetPos,llGetPos());
                     
-                    lookAtAv(targetPos);
+                    lookAtAv(agentKey, targetPos);
                     lockedOn = TRUE;
                     //llTeleportAgent(objOwner, "", targetPos, <0.0, 0.0, 0.0>);
                     //llTargetRemove(0);
@@ -202,9 +244,6 @@ state RDY
                     //rotation CamRot = llGetCameraRot();
                     //vector CamFoc = CamPos + llRot2Fwd(CamRot);
                     //llTeleportAgent(id, "", CamPos, CamFoc);
-
-
-
                 }
                 else
                     lockedOn = FALSE;
