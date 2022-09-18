@@ -1,5 +1,5 @@
-key _sound_on ="e9a0c36a-dffc-eca0-27b5-3ba4d527dfad";
-key _sound_off = "de58f2a6-ba96-d252-7351-ca839d847196";
+key _sound_on               ="e9a0c36a-dffc-eca0-27b5-3ba4d527dfad";
+key _sound_off              = "de58f2a6-ba96-d252-7351-ca839d847196";
 
 integer listener;
 integer channel;
@@ -10,7 +10,7 @@ integer adultcamOn          = FALSE;
 integer teencamOn           = FALSE;
 integer childcamOn          = FALSE;
 integer petitecamOn         = FALSE;
-//integer cinematiccamOn      = FALSE;  //!UNUSED
+//integer cinematiccamOn    = FALSE;  //!UNUSED
 integer sitcamOn            = FALSE;
 //integer sitOverride       = FALSE; // COMING SOON!!!!
 
@@ -33,8 +33,8 @@ string TP2AVI_              = "[{Amy}]Camera Mod v3 - TP2AVI";
 string TP2CAM_              = "[{Amy}]Camera Mod v3 - TP2CAM";
 string ANTIPUSH_            = "[{Amy}]Camera Mod v3 - AntiPush";
 
-vector _greenState = <0.000, 0.502, 0.000>;
-vector _redState = <0.502, 0.000, 0.000>;
+vector _greenState          = <0.000, 0.502, 0.000>;
+vector _redState            = <0.502, 0.000, 0.000>;
 
 debug(string message)
 {
