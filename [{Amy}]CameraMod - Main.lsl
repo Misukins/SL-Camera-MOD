@@ -399,19 +399,18 @@ default
             }
             else if ((message == "Cam2Avi") || (message == "√ Cam2Avi")){
                 //llTriggerSound(_sound_on, 0.4);
-                /* if(!g_CMCAMAVI){
+                if(!g_CMCAMAVI){
                     g_CMCAMAVI = TRUE;
                     llSetLinkAlpha(_cam2avi, 0.55, ALL_SIDES);
-                    llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
-                    llOwnerSay("AntiPush is On!");
+                    llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.06000, 0.00000>]);
+                    llOwnerSay("Camera to Avatar is On!");
                 }
                 else{
                     g_CMCAMAVI = FALSE;
                     llSetLinkAlpha(_cam2avi, 0, ALL_SIDES);
                     llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
-                    llOwnerSay("AntiPush is Off!");
-                } */
-                info("Sorry this needs more testing still!"); //!fix
+                    llOwnerSay("Camera to Avatar is Off!");
+                }
                 features(id);
             }
             else if (message == "Everything"){
@@ -429,7 +428,7 @@ default
                 llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL,      <0.00000, -0.03500, -0.05000>]);
                 llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL,      <0.00000, 0.00000, -0.05000>]);
                 llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL,    <0.00000, -0.08000, -0.05000>]);
-                llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL,     <0.00000, -0.08000, -0.05000>]);
+                llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL,     <0.00000, -0.06000, 0.00000>]);
                 llOwnerSay("Every Features are on!");
                 menu(id);
             }
