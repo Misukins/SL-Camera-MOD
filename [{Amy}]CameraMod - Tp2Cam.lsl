@@ -1,6 +1,6 @@
 key id;
 
-string objName = "[{Amy}]Camera Mod v3 - TP2CAM";
+string objName = "[{Amy}]Camera Mod v3.1 - TP2CAM";
 
 doTeleport(key id)
 {
