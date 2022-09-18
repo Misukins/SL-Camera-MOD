@@ -10,7 +10,8 @@ integer g_CMFollower        = FALSE;
 integer g_CMTPCAM           = FALSE;
 integer g_CMANTIPUSH        = FALSE;
 integer g_CMTPAVI           = FALSE;
-integer DEBUG               = TRUE;
+integer g_CMCAMAVI          = FALSE;
+integer DEBUG               = FALSE;
 
 integer listener;
 integer channel;
@@ -20,15 +21,17 @@ integer _follower;
 integer _tp2avi;
 integer _tp2cam;
 integer _antipush;
+integer _cam2avi;
 
 list features_menu          = [];
 list main_menu              = [];
 
-string CAMERA_              = "[{Amy}]Camera Mod v3";
-string FOLLOWER_            = "[{Amy}]Camera Mod v3 - Follower";
-string TP2AVI_              = "[{Amy}]Camera Mod v3 - TP2AVI";
-string TP2CAM_              = "[{Amy}]Camera Mod v3 - TP2CAM";
-string ANTIPUSH_            = "[{Amy}]Camera Mod v3 - AntiPush";
+string CAMERA_              = "[{Amy}]Camera Mod v3.1";
+string FOLLOWER_            = "[{Amy}]Camera Mod v3.1 - Follower";
+string TP2AVI_              = "[{Amy}]Camera Mod v3.1 - TP2AVI";
+string TP2CAM_              = "[{Amy}]Camera Mod v3.1 - TP2CAM";
+string ANTIPUSH_            = "[{Amy}]Camera Mod v3.1 - AntiPush";
+string CAM2AVI_             = "[{Amy}]Camera Mod v3.1 - Cam2Avi";
 
 vector _greenState          = <0.000, 0.502, 0.000>;
 vector _redState            = <0.502, 0.000, 0.000>;
@@ -63,10 +66,10 @@ menu(key id)
 
 features(key id)
 {
-    if ((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM))
-        features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ AntiPush", "√ Everything", "† Back †", "† Exit †" ];
+    if ((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM) && (g_CMCAMAVI))
+        features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "† Back †", "† Exit †" ];
     else
-        features_menu = [ "Follower", "TP2Cam", "TP2Avi", "AntiPush", "Everything", "† Back †", "† Exit †" ];
+        features_menu = [ "Follower", "TP2Cam", "TP2Avi", "Cam2Avi", "AntiPush", "Everything", "† Back †", "† Exit †" ];
     llListenRemove(listener);
     channel = -1000000000 - (integer)(llFrand(1000000000));
     listener = llListen(channel, "", "", "");
@@ -233,8 +236,12 @@ determine_cameraMOD_links()
             _antipush = i;
             found++;
         }
+        else if (llGetLinkName(i) == CAM2AVI_){
+            _cam2avi = i;
+            found++;
+        }
     }
-    while (i-- && found < 5);
+    while (i-- && found < 6);
 }
 
 default
@@ -264,15 +271,21 @@ default
             llSetLinkAlpha(_antipush, 0.55, ALL_SIDES);
             llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
         }
+        else if (g_CMCAMAVI){
+            llSetLinkAlpha(_cam2avi, 0.55, ALL_SIDES);
+            llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
+        }
         else{
             llSetLinkAlpha(_follower, 0, ALL_SIDES);
             llSetLinkAlpha(_tp2avi, 0, ALL_SIDES);
             llSetLinkAlpha(_tp2cam, 0, ALL_SIDES);
             llSetLinkAlpha(_antipush, 0, ALL_SIDES);
+            llSetLinkAlpha(_cam2avi, 0, ALL_SIDES);
             llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+            llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
         }
     }
 
@@ -394,19 +407,39 @@ default
                 }
                 features(id);
             }
+            else if ((message == "Cam2Avi") || (message == "√ Cam2Avi")){
+                //llTriggerSound(_sound_on, 0.4);
+                /* if(!g_CMCAMAVI){
+                    g_CMCAMAVI = TRUE;
+                    llSetLinkAlpha(_cam2avi, 0.55, ALL_SIDES);
+                    llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
+                    llOwnerSay("AntiPush is On!");
+                }
+                else{
+                    g_CMCAMAVI = FALSE;
+                    llSetLinkAlpha(_cam2avi, 0, ALL_SIDES);
+                    llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                    llOwnerSay("AntiPush is Off!");
+                } */
+                info("Sorry this needs more testing still!");
+                features(id);
+            }
             else if (message == "Everything"){
                 g_CMFollower    = TRUE;
                 g_CMTPCAM       = TRUE;
                 g_CMTPAVI       = TRUE;
                 g_CMANTIPUSH    = TRUE;
-                llSetLinkAlpha(_follower, 0.55, ALL_SIDES);
-                llSetLinkAlpha(_tp2cam, 0.55, ALL_SIDES);
-                llSetLinkAlpha(_tp2avi, 0.55, ALL_SIDES);
-                llSetLinkAlpha(_antipush, 0.55, ALL_SIDES);
-                llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
-                llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
-                llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
-                llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
+                g_CMCAMAVI      = TRUE;
+                llSetLinkAlpha(_follower,   0.55, ALL_SIDES);
+                llSetLinkAlpha(_tp2cam,     0.55, ALL_SIDES);
+                llSetLinkAlpha(_tp2avi,     0.55, ALL_SIDES);
+                llSetLinkAlpha(_antipush,   0.55, ALL_SIDES);
+                llSetLinkAlpha(_cam2avi,    0.55, ALL_SIDES);
+                llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL,    <0.00000, -0.03000, 0.00000>]);
+                llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL,      <0.00000, -0.03500, -0.05000>]);
+                llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL,      <0.00000, 0.00000, -0.05000>]);
+                llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL,    <0.00000, -0.08000, -0.05000>]);
+                llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL,     <0.00000, -0.08000, -0.05000>]);
                 llOwnerSay("Every Features are on!");
                 menu(id);
             }
@@ -415,14 +448,17 @@ default
                 g_CMTPCAM       = FALSE;
                 g_CMTPAVI       = FALSE;
                 g_CMANTIPUSH    = FALSE;
+                g_CMCAMAVI      = FALSE;
                 llSetLinkAlpha(_follower, 0, ALL_SIDES);
                 llSetLinkAlpha(_tp2cam, 0, ALL_SIDES);
                 llSetLinkAlpha(_tp2avi, 0, ALL_SIDES);
                 llSetLinkAlpha(_antipush, 0, ALL_SIDES);
+                llSetLinkAlpha(_cam2avi, 0, ALL_SIDES);
                 llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llOwnerSay("Every Features are off!");
                 menu(id);
             }
