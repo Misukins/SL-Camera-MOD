@@ -6,7 +6,7 @@ integer gUseMoveLock;
 integer gRelockMoveLockAfterMovement;
 integer gRelockIsUserMoving;
 
-string objName = "[{Amy}]Camera Mod v3 - AntiPush";
+string objName = "[{Amy}]Camera Mod v3.1 - AntiPush";
 
 vector _redState    = <0.502, 0.000, 0.000>;
 vector _whiteState  = <1.000, 1.000, 1.000>;
