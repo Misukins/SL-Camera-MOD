@@ -11,7 +11,7 @@ integer minPage;
 integer maxPage;
 
 string objOwner;
-string objName = "[{Amy}]Camera Mod v3 - TP2AVI";
+string objName = "[{Amy}]Camera Mod v3.1 - TP2AVI";
 
 list agentKeys;
 list agentNames;
