@@ -24,7 +24,7 @@ integer RANGE = 1;
 integer DEBUG = FALSE;
 
 string targetName = "";
-string objectName = "[{Amy}]Camera Mod v3 - Follower";
+string objectName = "[{Amy}]Camera Mod v3.1 - Follower";
 
 list avatarList = [];
 list avatarUUIDs = [];
