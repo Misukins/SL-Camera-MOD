@@ -1,6 +1,7 @@
 key id;
 
 string objName = "[{Amy}]Camera Mod v3.1 - TP2CAM";
+string copy    = "copyright: Amy (Misukins)";
 
 doTeleport(key id)
 {
@@ -11,6 +12,7 @@ default
 {
     state_entry()
     {
+        llSetObjectDesc(copy);
         llSetObjectName(objName);
     }
 

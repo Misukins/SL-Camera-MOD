@@ -13,6 +13,7 @@ integer lockedOn;
 
 string objOwner;
 string objName                  = "[{Amy}]Camera Mod v3.1 - Cam2Avi";
+string copy                     = "copyright: Amy (Misukins)";
 
 list agentKeys;
 list agentNames;
@@ -101,6 +102,8 @@ default
 {
     state_entry()
     {
+        llSetObjectDesc(copy);
+        llSetObjectName(objName);
         llRequestPermissions(llGetOwner(), PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA);
     }
 
@@ -137,13 +140,6 @@ state RDY
         objChan = 1 + (integer)llFrand(16777216);
         lsn = llListen(objChan, "", objOwner, "");
         if(DEBUG){
-            if(!lockedOn)
-                llSetText("OFFFFFF", <1.0, 1.0, 0.0>, 1);
-            else
-                llSetText("ONNNNN", <1.0, 1.0, 0.0>, 1);
-        }
-
-        if(DEBUG){
             string maker = "secondlife:///app/agent/1ffac40f-b1ea-41f9-b576-1993b96e36b2/about";
             debug("This script needs testing so report them to\n" + (string)maker + "\nThank you!");
         }
@@ -161,7 +157,6 @@ state RDY
             string maker = "secondlife:///app/agent/1ffac40f-b1ea-41f9-b576-1993b96e36b2/about";
             debug("This script needs testing so report them to\n" + (string)maker + "\nThank you!");
         }
-        
         if(!lockedOn){
             list targets;
             string agentKey;
@@ -197,12 +192,8 @@ state RDY
             }
             lockedOn = TRUE;
             cbcDisplayPage();
-            if(DEBUG)
-                llSetText("ONNNNN", <1.0, 1.0, 0.0>, 1);
         }
         else{
-            if(DEBUG)
-                llSetText("OFFFFFF", <1.0, 1.0, 0.0>, 1);
             stop();
             lockedOn = FALSE;
         }
@@ -232,18 +223,8 @@ state RDY
                     string agentKey = llList2Key(agentKeys, targetIndex);
                     list answer = llGetObjectDetails(agentKey, [OBJECT_POS]);
                     vector targetPos = llList2Vector(answer, 0);
-                    //float dist = llVecDist(targetPos,llGetPos());
-                    
                     lookAtAv(agentKey, targetPos);
                     lockedOn = TRUE;
-                    //llTeleportAgent(objOwner, "", targetPos, <0.0, 0.0, 0.0>);
-                    //llTargetRemove(0);
-                    //llStopMoveToTarget();
-
-                    //vector CamPos = llGetCameraPos();
-                    //rotation CamRot = llGetCameraRot();
-                    //vector CamFoc = CamPos + llRot2Fwd(CamRot);
-                    //llTeleportAgent(id, "", CamPos, CamFoc);
                 }
                 else
                     lockedOn = FALSE;

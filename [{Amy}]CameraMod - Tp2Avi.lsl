@@ -12,6 +12,7 @@ integer maxPage;
 
 string objOwner;
 string objName = "[{Amy}]Camera Mod v3.1 - TP2AVI";
+string copy    = "copyright: Amy (Misukins)";
 
 list agentKeys;
 list agentNames;
@@ -59,6 +60,7 @@ default
 {
     state_entry()
     {
+        llSetObjectDesc(copy);
         llRequestPermissions(llGetOwner(), PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA);
     }
 

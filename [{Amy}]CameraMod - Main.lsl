@@ -33,21 +33,20 @@ string TP2CAM_              = "[{Amy}]Camera Mod v3.1 - TP2CAM";
 string ANTIPUSH_            = "[{Amy}]Camera Mod v3.1 - AntiPush";
 string CAM2AVI_             = "[{Amy}]Camera Mod v3.1 - Cam2Avi";
 
+string copy                 = "copyright: Amy (Misukins)";
+
 vector _greenState          = <0.000, 0.502, 0.000>;
 vector _redState            = <0.502, 0.000, 0.000>;
 
-debug(string message)
-{
-     llOwnerSay("[DEBUG] " + message);
+debug(string message){
+    llOwnerSay("[DEBUG] " + message);
 }
 
-info(string message)
-{
+info(string message){
     llOwnerSay("[INFO] " + message);
 }
 
-menu(key id)
-{
+menu(key id){
     if (cameraOn == FALSE)
         main_menu = [ "■ Off ■", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
     else if ((adultcamOn == TRUE) && (cameraOn == TRUE))
@@ -64,8 +63,7 @@ menu(key id)
     llDialog(id, "Choose an option...", main_menu, channel);
 }
 
-features(key id)
-{
+features(key id){
     if ((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM) && (g_CMCAMAVI))
         features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "† Back †", "† Exit †" ];
     else
@@ -76,14 +74,12 @@ features(key id)
     llDialog(id, "Choose an option...", features_menu, channel);
 }
 
-default_cam()
-{
+default_cam(){
     llClearCameraParams();
     llSetCameraParams([CAMERA_ACTIVE, 1]);
 }
 
-off_cam()
-{
+off_cam(){
     llSetLinkColor(LINK_THIS, _redState, ALL_SIDES);
     llPlaySound(_sound_off, 0.4);
     info("Camera Mod Disabled.");
@@ -92,8 +88,7 @@ off_cam()
     cameraOn = FALSE;
 }
 
-adult_cam()
-{
+adult_cam(){
     llSetLinkColor(LINK_THIS, _greenState, ALL_SIDES);
     info("Adult Camera Enabled.");
     default_cam();
@@ -118,8 +113,7 @@ adult_cam()
     petitecamOn     = FALSE;
 }
 
-teen_cam()
-{
+teen_cam(){
     llSetLinkColor(LINK_THIS, _greenState, ALL_SIDES);
     info("Teen Camera Enabled.");
     default_cam();
@@ -144,8 +138,7 @@ teen_cam()
     petitecamOn     = FALSE;
 }
 
-child_cam()
-{
+child_cam(){
     llSetLinkColor(LINK_THIS, _greenState, ALL_SIDES);
     info("Child Camera Enabled.");
     default_cam();
@@ -170,8 +163,7 @@ child_cam()
     petitecamOn     = FALSE;
 }
 
-petite_cam()
-{
+petite_cam(){
     llSetLinkColor(LINK_THIS, _greenState, ALL_SIDES);
     info("Petite Camera Enabled.");
     default_cam();
@@ -197,22 +189,19 @@ petite_cam()
 }
 
 // TODO
-sitting()
-{
+sitting(){
     string curAnimState = llGetAnimation(llGetOwner());
     if (curAnimState == "Sitting"){
         debug("Sitting");
     }
 }
 
-reset_cam()
-{
+reset_cam(){
     info("Camera Reset.");
     llResetScript();
 }
 
-determine_cameraMOD_links()
-{
+determine_cameraMOD_links(){
     integer i = link_num;
     integer found = 0;
     do {
@@ -250,6 +239,7 @@ default
     {
         link_num = llGetNumberOfPrims();
         llSetObjectName(CAMERA_);
+        llSetObjectDesc(copy);
         llSitTarget(<0.0, 0.0, 0.1>, ZERO_ROTATION);
         llSetLinkAlpha(_camera, 0.55, ALL_SIDES);
         llPreloadSound(_sound_on);
@@ -421,7 +411,7 @@ default
                     llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                     llOwnerSay("AntiPush is Off!");
                 } */
-                info("Sorry this needs more testing still!");
+                info("Sorry this needs more testing still!"); //!fix
                 features(id);
             }
             else if (message == "Everything"){

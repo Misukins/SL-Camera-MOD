@@ -21,10 +21,9 @@ integer fifteenmDist  = FALSE;
 integer twentyMDist   = FALSE;
 integer RANGE = 1;
 
-integer DEBUG = FALSE;
-
 string targetName = "";
 string objectName = "[{Amy}]Camera Mod v3.1 - Follower";
+string copy       = "copyright: Amy (Misukins)";
 
 list avatarList = [];
 list avatarUUIDs = [];
@@ -178,8 +177,7 @@ default
 {
   state_entry()
   {
-    if(DEBUG)
-      llOwnerSay("state DEF");
+    llSetObjectDesc(copy);
     llSetObjectName(objectName);
     dlgChannel = -1 - (integer)("0x" + llGetSubString( (string)llGetKey(), -7, -1) );
     if(RANGE == 1)
@@ -351,8 +349,6 @@ state Scan
 {
   state_entry()
   {
-    if(DEBUG)
-      llOwnerSay("state Scan");
     avatarList = [];
     avatarUUIDs = [];
     llSensor("", NULL_KEY, AGENT, 96.0, PI);
@@ -360,8 +356,8 @@ state Scan
 
   changed(integer change)
   {
-      if (change & CHANGED_OWNER)
-          llResetScript();
+    if (change & CHANGED_OWNER)
+      llResetScript();
   }
 
   link_message(integer from, integer to, string msg, key id)
@@ -395,8 +391,6 @@ state Dialog
     gMenuPosition = 0;
     Menu();
     init();
-    if(DEBUG)
-      llOwnerSay("state Dialog");
   }
 
   changed(integer change)
