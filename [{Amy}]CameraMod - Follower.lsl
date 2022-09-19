@@ -180,6 +180,7 @@ default
   {
     llSetObjectDesc(copy);
     llSetObjectName(objectName);
+    llSetLinkTexture(LINK_THIS, FOLLOWER_Texture, ALL_SIDES);
     dlgChannel = -1 - (integer)("0x" + llGetSubString( (string)llGetKey(), -7, -1) );
     if(RANGE == 1)
       info("Follow Distance has been set to DEFAULT.");

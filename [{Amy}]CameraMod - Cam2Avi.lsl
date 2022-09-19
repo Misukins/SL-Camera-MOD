@@ -107,6 +107,7 @@ default
         llSetObjectDesc(copy);
         llSetObjectName(objName);
         llRequestPermissions(llGetOwner(), PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA);
+        llSetLinkTexture(LINK_THIS, CAM2AVI_Texture, ALL_SIDES);
     }
 
     run_time_permissions(integer perm)

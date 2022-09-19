@@ -238,6 +238,7 @@ default
 {
     state_entry()
     {
+        llSetLinkTexture(LINK_THIS, CAM2AVI_Texture, ALL_SIDES);
         link_num = llGetNumberOfPrims();
         llSetObjectName(CAMERA_);
         llSetObjectDesc(copy);

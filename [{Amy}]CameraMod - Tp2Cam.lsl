@@ -13,6 +13,7 @@ default
 {
     state_entry()
     {
+        llSetLinkTexture(LINK_THIS, TP2CAM_Texture, ALL_SIDES);
         llSetObjectDesc(copy);
         llSetObjectName(objName);
     }

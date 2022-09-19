@@ -62,6 +62,7 @@ default
 {
     state_entry()
     {
+        llSetLinkTexture(LINK_THIS, TP2AVI_Texture, ALL_SIDES);
         llSetObjectDesc(copy);
         llRequestPermissions(llGetOwner(), PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA);
     }
