@@ -1,5 +1,6 @@
 key _sound_on               = "e9a0c36a-dffc-eca0-27b5-3ba4d527dfad";
 key _sound_off              = "de58f2a6-ba96-d252-7351-ca839d847196";
+key CAMERA_Texture          = "b395765f-ce87-d568-821e-7e7f1c8c4d78";
 
 integer cameraOn            = FALSE;
 integer adultcamOn          = FALSE;

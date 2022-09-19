@@ -1,4 +1,5 @@
 key targetKey = NULL_KEY;
+key FOLLOWER_Texture = "df27b1a7-6ee0-78e0-ba57-2b7fe9c12fd2";
 
 float DELAY = 0.5;
 float TAU = 1.0;

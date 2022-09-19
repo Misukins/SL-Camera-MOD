@@ -1,3 +1,5 @@
+key CAM2AVI_Texture = "d74342d6-e31f-8264-d0b9-f42c08fb122f";
+
 integer agentTotal;
 integer targetIndex             = -1;
 integer objChan;
