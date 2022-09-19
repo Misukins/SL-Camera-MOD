@@ -49,15 +49,15 @@ info(string message){
 
 menu(key id){
     if (cameraOn == FALSE)
-        main_menu = [ "■ Off ■", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
+        main_menu = [ "■ Off ■", "□ Adult □", "□ Teen □", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
     else if ((adultcamOn == TRUE) && (cameraOn == TRUE))
-        main_menu = [ "□ Off □", "□ Cinema □", "■ Adult ■", "□ Teen □", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
+        main_menu = [ "□ Off □", "■ Adult ■", "□ Teen □", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
     else if ((teencamOn == TRUE) && (cameraOn == TRUE))
-        main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "■ Teen ■", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
+        main_menu = [ "□ Off □", "□ Adult □", "■ Teen ■", "□ Child □", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
     else if ((childcamOn == TRUE) && (cameraOn == TRUE))
-        main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "■ Child ■", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
+        main_menu = [ "□ Off □", "□ Adult □", "□ Teen □", "■ Child ■", "□ Petite □", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
     else if ((petitecamOn == TRUE) && (cameraOn == TRUE))
-        main_menu = [ "□ Off □", "□ Cinema □", "□ Adult □", "□ Teen □", "□ Child □", "■ Petite ■", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
+        main_menu = [ "□ Off □", "□ Adult □", "□ Teen □", "□ Child □", "■ Petite ■", "† StopAnims †", "† Reset †", "† Features †", "† Exit †" ];
     llListenRemove(listener);
     channel = -1000000000 - (integer)(llFrand(1000000000));
     listener = llListen(channel, "", "", "");
@@ -248,7 +248,7 @@ default
 {
     state_entry()
     {
-        llSetLinkTexture(LINK_THIS, CAM2AVI_Texture, ALL_SIDES);
+        llSetLinkTexture(LINK_THIS, CAMERA_Texture, ALL_SIDES);
         link_num = llGetNumberOfPrims();
         llSetObjectName(CAMERA_);
         llSetObjectDesc(copy);
@@ -275,7 +275,7 @@ default
         }
         else if (g_CMCAMAVI){
             llSetLinkAlpha(_cam2avi, 0.55, ALL_SIDES);
-            llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
+            llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.07000, -0.05000>]);
         }
         else{
             llSetLinkAlpha(_follower, 0, ALL_SIDES);
@@ -414,7 +414,7 @@ default
                 if(!g_CMCAMAVI){
                     g_CMCAMAVI = TRUE;
                     llSetLinkAlpha(_cam2avi, 0.55, ALL_SIDES);
-                    llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.08000, 0.05000>]);
+                    llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.07000, 0.05000>]);
                     llOwnerSay("Camera to Avatar is On!");
                 }
                 else{
@@ -440,7 +440,7 @@ default
                 llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL,      <0.00000, -0.03500, -0.05000>]);
                 llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL,      <0.00000, 0.00000, -0.05000>]);
                 llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL,    <0.00000, -0.06000, 0.00000>]);
-                llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL,     <0.00000, -0.08000, -0.05000>]);
+                llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL,     <0.00000, -0.07000, -0.05000>]);
                 llOwnerSay("Every Features are on!");
                 menu(id);
             }
@@ -462,6 +462,10 @@ default
                 llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llOwnerSay("Every Features are off!");
                 menu(id);
+            }
+            else if (message == "ChangeColor"){
+                debug("SORRY!!!.. this feature is coming soon! <3");
+                features(id);
             }
             else{
                 llTriggerSound(_sound_off, 0.4);
