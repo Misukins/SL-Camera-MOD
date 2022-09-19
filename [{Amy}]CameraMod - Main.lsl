@@ -66,13 +66,23 @@ menu(key id){
 
 features(key id){
     if ((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM) && (g_CMCAMAVI))
-        features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "† Back †", "† Exit †" ];
+        features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "ChangeColor", "† Back †", "† Exit †" ];
     else
-        features_menu = [ "Follower", "TP2Cam", "TP2Avi", "Cam2Avi", "AntiPush", "Everything", "† Back †", "† Exit †" ];
+        features_menu = [ "Follower", "TP2Cam", "TP2Avi", "Cam2Avi", "AntiPush", "Everything", "ChangeColor", "† Back †", "† Exit †" ];
     llListenRemove(listener);
     channel = -1000000000 - (integer)(llFrand(1000000000));
     listener = llListen(channel, "", "", "");
     llDialog(id, "Choose an option...", features_menu, channel);
+}
+
+changecolor()
+{
+    //todo !!!!
+    /*
+    TP2CAM  prim color = 
+    TP2AVI  prim color = 
+    CAM2AVI prim color = 
+    */
 }
 
 default_cam(){
@@ -261,7 +271,7 @@ default
         }
         else if (g_CMANTIPUSH){
             llSetLinkAlpha(_antipush, 0.55, ALL_SIDES);
-            llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
+            llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.05000, 0.00000>]);
         }
         else if (g_CMCAMAVI){
             llSetLinkAlpha(_cam2avi, 0.55, ALL_SIDES);
@@ -388,7 +398,7 @@ default
                 if(!g_CMANTIPUSH){
                     g_CMANTIPUSH = TRUE;
                     llSetLinkAlpha(_antipush, 0.55, ALL_SIDES);
-                    llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.08000, -0.05000>]);
+                    llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.06000, -0.00000>]);
                     llOwnerSay("AntiPush is On!");
                 }
                 else{
@@ -404,7 +414,7 @@ default
                 if(!g_CMCAMAVI){
                     g_CMCAMAVI = TRUE;
                     llSetLinkAlpha(_cam2avi, 0.55, ALL_SIDES);
-                    llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.06000, 0.00000>]);
+                    llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.08000, 0.05000>]);
                     llOwnerSay("Camera to Avatar is On!");
                 }
                 else{
@@ -429,8 +439,8 @@ default
                 llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL,    <0.00000, -0.03000, 0.00000>]);
                 llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL,      <0.00000, -0.03500, -0.05000>]);
                 llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL,      <0.00000, 0.00000, -0.05000>]);
-                llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL,    <0.00000, -0.08000, -0.05000>]);
-                llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL,     <0.00000, -0.06000, 0.00000>]);
+                llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL,    <0.00000, -0.06000, 0.00000>]);
+                llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL,     <0.00000, -0.08000, -0.05000>]);
                 llOwnerSay("Every Features are on!");
                 menu(id);
             }
