@@ -25,7 +25,7 @@ list menuControls               = ["←", "→"];
 integer DEBUG = TRUE;
 
 vector _greenState              = <0.000, 0.502, 0.000>;
-vector _redState                = <0.502, 0.000, 0.000>;
+vector _whiteState              = <1.000, 1.000, 1.000>;
 
 debug(string message)
 {
@@ -97,7 +97,7 @@ stop()
     llOwnerSay("Perv Cam resetted!");
     llSetCameraParams([CAMERA_ACTIVE, 0]);
     llClearCameraParams();
-    llSetLinkColor(LINK_THIS, _redState, ALL_SIDES);
+    llSetLinkColor(LINK_THIS, _whiteState, ALL_SIDES);
 }
 
 default
@@ -137,7 +137,7 @@ state RDY
 {
     state_entry()
     {
-        llSetLinkColor(LINK_THIS, _redState, ALL_SIDES);
+        llSetLinkColor(LINK_THIS, _whiteState, ALL_SIDES);
         llSetObjectName(objName);
         objOwner = llGetOwner();
         objChan = 1 + (integer)llFrand(16777216);
