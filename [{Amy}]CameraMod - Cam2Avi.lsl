@@ -88,7 +88,7 @@ lookAtAv(string agentKey, vector targetPos)
         CAMERA_POSITION_THRESHOLD, 2.0, // (0 to 4) meters
         CAMERA_FOCUS_OFFSET, <2, 3, 0> // <-10,-10,-10> to <10,10,10> meters
     ]);
-    llOwnerSay("You are now perving " + (string)target_name + ". (secondlife:///app/agent/" + (string)agentKey + "/about)" );
+    llOwnerSay("You are now perving " + (string)target_name + ". (secondlife:///app/agent/" + (string)agentKey + "/about)\n use ALT + Left Mouse click to cam and move you CAMP!");
     llSetLinkColor(LINK_THIS, _greenState, ALL_SIDES);
 }
 
