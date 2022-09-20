@@ -1,5 +1,3 @@
-key TP2AVI_Texture = "c84ae8e7-e8a1-75a9-94bf-cad4c26ee3e6";
-
 integer agentTotal;
 integer targetIndex = -1;
 integer objChan;
@@ -62,7 +60,6 @@ default
 {
     state_entry()
     {
-        llSetLinkTexture(LINK_THIS, TP2AVI_Texture, ALL_SIDES);
         llSetObjectDesc(copy);
         llRequestPermissions(llGetOwner(), PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA);
     }
