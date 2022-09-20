@@ -1,5 +1,3 @@
-key CAM2AVI_Texture = "d74342d6-e31f-8264-d0b9-f42c08fb122f";
-
 integer agentTotal;
 integer targetIndex             = -1;
 integer objChan;
@@ -107,7 +105,6 @@ default
         llSetObjectDesc(copy);
         llSetObjectName(objName);
         llRequestPermissions(llGetOwner(), PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA);
-        llSetLinkTexture(LINK_THIS, CAM2AVI_Texture, ALL_SIDES);
     }
 
     run_time_permissions(integer perm)
