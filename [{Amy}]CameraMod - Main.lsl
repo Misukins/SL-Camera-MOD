@@ -265,22 +265,27 @@ default
         if(g_CMFollower){
             llSetLinkAlpha(_follower, 0.55, ALL_SIDES);
             llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <0.00000, -0.03000, 0.00000>]);
+            llMessageLinked(LINK_SET, 0, "Follower ON",    NULL_KEY);
         }
         else if (g_CMTPAVI){
             llSetLinkAlpha(_tp2avi, 0.55, ALL_SIDES);
             llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <0.00000, 0.00000, -0.05000>]);
+            llMessageLinked(LINK_SET, 0, "Tp2Avi ON",      NULL_KEY);
         }
         else if (g_CMTPCAM){
             llSetLinkAlpha(_tp2cam, 0.55, ALL_SIDES);
             llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <0.00000, -0.03500, -0.05000>]);
+            llMessageLinked(LINK_SET, 0, "Tp2Cam ON",      NULL_KEY);
         }
         else if (g_CMANTIPUSH){
             llSetLinkAlpha(_antipush, 0.55, ALL_SIDES);
             llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <0.00000, -0.05000, 0.00000>]);
+            llMessageLinked(LINK_SET, 0, "AntiPush ON",    NULL_KEY);
         }
         else if (g_CMCAMAVI){
             llSetLinkAlpha(_cam2avi, 0.55, ALL_SIDES);
             llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.07000, -0.05000>]);
+            llMessageLinked(LINK_SET, 0, "Cam2Avi ON",     NULL_KEY);
         }
         else{
             llSetLinkAlpha(_follower, 0,    ALL_SIDES);
@@ -293,6 +298,21 @@ default
             llSetLinkPrimitiveParams(_tp2cam,   [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_cam2avi,  [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+
+            //!TEST
+            //llMessageLinked(LINK_SET, 0, "AntiPush OFF",    NULL_KEY);
+            //llMessageLinked(LINK_SET, 0, "Cam2Avi OFF",     NULL_KEY);
+            //llMessageLinked(LINK_SET, 0, "Follower OFF",    NULL_KEY);
+            //llMessageLinked(LINK_SET, 0, "Tp2Avi OFF",      NULL_KEY);
+            //llMessageLinked(LINK_SET, 0, "Tp2Cam OFF",      NULL_KEY);
+
+        /*
+            llSetScriptState("[{Amy}]CameraMod - AntiPush", FALSE);
+            llSetScriptState("[{Amy}]CameraMod - Cam2Avi",  FALSE);
+            llSetScriptState("[{Amy}]CameraMod - Follower", FALSE);
+            llSetScriptState("[{Amy}]CameraMod - Tp2Avi",   FALSE);
+            llSetScriptState("[{Amy}]CameraMod - Tp2Cam",   FALSE);
+    	*/
         }
         llSetLinkTexture(_camera,   CAMERA_Texture,     ALL_SIDES);
         llSetLinkTexture(_tp2cam,   TP2CAM_Texture,     ALL_SIDES);
@@ -451,6 +471,14 @@ default
                 llSetLinkPrimitiveParams(_tp2avi,   [PRIM_POS_LOCAL,    <0.00000,  0.00000, -0.05000>]);
                 llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL,    <0.00000, -0.06000,  0.00000>]);
                 llSetLinkPrimitiveParams(_cam2avi,  [PRIM_POS_LOCAL,    <0.00000, -0.07000, -0.05000>]);
+
+                //!TEST
+                //llMessageLinked(LINK_SET, 0, "AntiPush ON",    NULL_KEY);
+                //llMessageLinked(LINK_SET, 0, "Cam2Avi ON",     NULL_KEY);
+                //llMessageLinked(LINK_SET, 0, "Follower ON",    NULL_KEY);
+                //llMessageLinked(LINK_SET, 0, "Tp2Avi ON",      NULL_KEY);
+                //llMessageLinked(LINK_SET, 0, "Tp2Cam ON",      NULL_KEY);
+
                 llOwnerSay("Every Features are on!");
                 menu(id);
             }
@@ -470,6 +498,14 @@ default
                 llSetLinkPrimitiveParams(_tp2avi,   [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llSetLinkPrimitiveParams(_cam2avi,  [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+
+                //!TEST
+                //llMessageLinked(LINK_SET, 0, "AntiPush OFF",    NULL_KEY);
+                //llMessageLinked(LINK_SET, 0, "Cam2Avi OFF",     NULL_KEY);
+                //llMessageLinked(LINK_SET, 0, "Follower OFF",    NULL_KEY);
+                //llMessageLinked(LINK_SET, 0, "Tp2Avi OFF",      NULL_KEY);
+                //llMessageLinked(LINK_SET, 0, "Tp2Cam OFF",      NULL_KEY);
+
                 llOwnerSay("Every Features are off!");
                 menu(id);
             }
