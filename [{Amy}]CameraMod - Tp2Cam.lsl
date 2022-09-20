@@ -1,5 +1,4 @@
 key id;
-key TP2CAM_Texture  = "0383398b-2847-5294-54a6-864270036ab0";
 
 string objName      = "[{Amy}]Camera Mod v3.1 - TP2CAM";
 string copy         = "copyright: Amy (Misukins)";
@@ -13,7 +12,6 @@ default
 {
     state_entry()
     {
-        llSetLinkTexture(LINK_THIS, TP2CAM_Texture, ALL_SIDES);
         llSetObjectDesc(copy);
         llSetObjectName(objName);
     }
