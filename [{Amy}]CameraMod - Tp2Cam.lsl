@@ -30,7 +30,7 @@ default
 
     link_message(integer from,integer to,string msg,key id)
     {
-      if (msg == "RESET"){
+        if(msg == "RESET"){
           llOwnerSay("Resetting - Teleport 2 Camera Script!");
           llResetScript();
         }
