@@ -1,6 +1,11 @@
 key _sound_on               = "e9a0c36a-dffc-eca0-27b5-3ba4d527dfad";
 key _sound_off              = "de58f2a6-ba96-d252-7351-ca839d847196";
+
 key CAMERA_Texture          = "b395765f-ce87-d568-821e-7e7f1c8c4d78";
+key CAM2AVI_Texture         = "d74342d6-e31f-8264-d0b9-f42c08fb122f";
+key FOLLOWER_Texture        = "df27b1a7-6ee0-78e0-ba57-2b7fe9c12fd2";
+key TP2AVI_Texture          = "c84ae8e7-e8a1-75a9-94bf-cad4c26ee3e6";
+key TP2CAM_Texture          = "0383398b-2847-5294-54a6-864270036ab0";
 
 integer cameraOn            = FALSE;
 integer adultcamOn          = FALSE;
@@ -83,6 +88,8 @@ changecolor()
     TP2AVI  prim color = 
     CAM2AVI prim color = 
     */
+
+    debug("SORRY!!!.. this feature is coming soon! <3");
 }
 
 default_cam(){
@@ -248,7 +255,6 @@ default
 {
     state_entry()
     {
-        llSetLinkTexture(LINK_THIS, CAMERA_Texture, ALL_SIDES);
         link_num = llGetNumberOfPrims();
         llSetObjectName(CAMERA_);
         llSetObjectDesc(copy);
@@ -278,17 +284,22 @@ default
             llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <0.00000, -0.07000, -0.05000>]);
         }
         else{
-            llSetLinkAlpha(_follower, 0, ALL_SIDES);
-            llSetLinkAlpha(_tp2avi, 0, ALL_SIDES);
-            llSetLinkAlpha(_tp2cam, 0, ALL_SIDES);
-            llSetLinkAlpha(_antipush, 0, ALL_SIDES);
-            llSetLinkAlpha(_cam2avi, 0, ALL_SIDES);
+            llSetLinkAlpha(_follower, 0,    ALL_SIDES);
+            llSetLinkAlpha(_tp2avi,   0,    ALL_SIDES);
+            llSetLinkAlpha(_tp2cam,   0,    ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0,    ALL_SIDES);
+            llSetLinkAlpha(_cam2avi,  0,    ALL_SIDES);
             llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
         }
+        llSetLinkTexture(LINK_THIS, CAMERA_Texture,     ALL_SIDES);
+        llSetLinkTexture(LINK_THIS, TP2CAM_Texture,     ALL_SIDES);
+        llSetLinkTexture(LINK_THIS, TP2AVI_Texture,     ALL_SIDES);
+        llSetLinkTexture(LINK_THIS, FOLLOWER_Texture,   ALL_SIDES);
+        llSetLinkTexture(LINK_THIS, CAM2AVI_Texture,    ALL_SIDES);
     }
 
     touch_start(integer total_number)
@@ -464,7 +475,7 @@ default
                 menu(id);
             }
             else if (message == "ChangeColor"){
-                debug("SORRY!!!.. this feature is coming soon! <3");
+                changecolor();
                 features(id);
             }
             else{
