@@ -1,11 +1,10 @@
 key _sound_on               = "e9a0c36a-dffc-eca0-27b5-3ba4d527dfad";
 key _sound_off              = "de58f2a6-ba96-d252-7351-ca839d847196";
-
-key CAMERA_Texture          = "b395765f-ce87-d568-821e-7e7f1c8c4d78";
-key CAM2AVI_Texture         = "d74342d6-e31f-8264-d0b9-f42c08fb122f";
-key FOLLOWER_Texture        = "df27b1a7-6ee0-78e0-ba57-2b7fe9c12fd2";
-key TP2AVI_Texture          = "c84ae8e7-e8a1-75a9-94bf-cad4c26ee3e6";
-key TP2CAM_Texture          = "0383398b-2847-5294-54a6-864270036ab0";
+key CAMERA_Texture          = "a6f1942a-8bec-bdce-5a87-f0d7f95f943f";
+key CAM2AVI_Texture         = "27205b1b-232b-59cf-8137-08a93e65156e";
+key FOLLOWER_Texture        = "c43bf1f3-d5dc-aa9e-c8d9-58c9ea346448";
+key TP2AVI_Texture          = "0d4a4d94-8b14-2197-0366-8904dc365642";
+key TP2CAM_Texture          = "bf266087-dea1-1dcd-f90e-59d67d6e2a08";
 
 integer cameraOn            = FALSE;
 integer adultcamOn          = FALSE;
@@ -29,6 +28,7 @@ integer _tp2cam;
 integer _antipush;
 integer _cam2avi;
 
+list color_menu             = [];
 list features_menu          = [];
 list main_menu              = [];
 
@@ -38,7 +38,6 @@ string TP2AVI_              = "[{Amy}]Camera Mod v3.1 - TP2AVI";
 string TP2CAM_              = "[{Amy}]Camera Mod v3.1 - TP2CAM";
 string ANTIPUSH_            = "[{Amy}]Camera Mod v3.1 - AntiPush";
 string CAM2AVI_             = "[{Amy}]Camera Mod v3.1 - Cam2Avi";
-
 string copy                 = "copyright: Amy (Misukins)";
 
 vector _greenState          = <0.000, 0.502, 0.000>;
@@ -69,7 +68,7 @@ menu(key id){
     llDialog(id, "Choose an option...", main_menu, channel);
 }
 
-features(key id){
+features(key id){ //!
     if ((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM) && (g_CMCAMAVI))
         features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "ChangeColor", "† Back †", "† Exit †" ];
     else
@@ -80,8 +79,7 @@ features(key id){
     llDialog(id, "Choose an option...", features_menu, channel);
 }
 
-changecolor()
-{
+changecolor(){
     //todo !!!!
     /*
     TP2CAM  prim color = 
@@ -210,7 +208,8 @@ petite_cam(){
 sitting(){
     string curAnimState = llGetAnimation(llGetOwner());
     if (curAnimState == "Sitting"){
-        debug("Sitting");
+        if(DEBUG)
+            debug("Sitting");
     }
 }
 
@@ -290,16 +289,16 @@ default
             llSetLinkAlpha(_antipush, 0,    ALL_SIDES);
             llSetLinkAlpha(_cam2avi,  0,    ALL_SIDES);
             llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
-            llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
-            llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+            llSetLinkPrimitiveParams(_tp2avi,   [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+            llSetLinkPrimitiveParams(_tp2cam,   [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
             llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
-            llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+            llSetLinkPrimitiveParams(_cam2avi,  [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
         }
-        llSetLinkTexture(LINK_THIS, CAMERA_Texture,     ALL_SIDES);
-        llSetLinkTexture(LINK_THIS, TP2CAM_Texture,     ALL_SIDES);
-        llSetLinkTexture(LINK_THIS, TP2AVI_Texture,     ALL_SIDES);
-        llSetLinkTexture(LINK_THIS, FOLLOWER_Texture,   ALL_SIDES);
-        llSetLinkTexture(LINK_THIS, CAM2AVI_Texture,    ALL_SIDES);
+        llSetLinkTexture(_camera,   CAMERA_Texture,     ALL_SIDES);
+        llSetLinkTexture(_tp2cam,   TP2CAM_Texture,     ALL_SIDES);
+        llSetLinkTexture(_tp2avi,   TP2AVI_Texture,     ALL_SIDES);
+        llSetLinkTexture(_follower, FOLLOWER_Texture,   ALL_SIDES);
+        llSetLinkTexture(_cam2avi,  CAM2AVI_Texture,    ALL_SIDES);
     }
 
     touch_start(integer total_number)
@@ -311,7 +310,7 @@ default
     listen(integer channel, string name, key id, string message)
     {
         llListenRemove(channel);
-        if (llGetOwnerKey(id) == llGetOwner())
+        if (llGetOwnerKey(id) == llGetOwner()) //!
         {
             if (message == "□ Adult □"){
                 adult_cam();
@@ -447,11 +446,11 @@ default
                 llSetLinkAlpha(_tp2avi,     0.55, ALL_SIDES);
                 llSetLinkAlpha(_antipush,   0.55, ALL_SIDES);
                 llSetLinkAlpha(_cam2avi,    0.55, ALL_SIDES);
-                llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL,    <0.00000, -0.03000, 0.00000>]);
-                llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL,      <0.00000, -0.03500, -0.05000>]);
-                llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL,      <0.00000, 0.00000, -0.05000>]);
-                llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL,    <0.00000, -0.06000, 0.00000>]);
-                llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL,     <0.00000, -0.07000, -0.05000>]);
+                llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL,    <0.00000, -0.03000,  0.00000>]);
+                llSetLinkPrimitiveParams(_tp2cam,   [PRIM_POS_LOCAL,    <0.00000, -0.03500, -0.05000>]);
+                llSetLinkPrimitiveParams(_tp2avi,   [PRIM_POS_LOCAL,    <0.00000,  0.00000, -0.05000>]);
+                llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL,    <0.00000, -0.06000,  0.00000>]);
+                llSetLinkPrimitiveParams(_cam2avi,  [PRIM_POS_LOCAL,    <0.00000, -0.07000, -0.05000>]);
                 llOwnerSay("Every Features are on!");
                 menu(id);
             }
@@ -461,16 +460,16 @@ default
                 g_CMTPAVI       = FALSE;
                 g_CMANTIPUSH    = FALSE;
                 g_CMCAMAVI      = FALSE;
-                llSetLinkAlpha(_follower, 0, ALL_SIDES);
-                llSetLinkAlpha(_tp2cam, 0, ALL_SIDES);
-                llSetLinkAlpha(_tp2avi, 0, ALL_SIDES);
-                llSetLinkAlpha(_antipush, 0, ALL_SIDES);
-                llSetLinkAlpha(_cam2avi, 0, ALL_SIDES);
+                llSetLinkAlpha(_follower, 0,  ALL_SIDES);
+                llSetLinkAlpha(_tp2cam,   0,  ALL_SIDES);
+                llSetLinkAlpha(_tp2avi,   0,  ALL_SIDES);
+                llSetLinkAlpha(_antipush, 0,  ALL_SIDES);
+                llSetLinkAlpha(_cam2avi,  0,  ALL_SIDES);
                 llSetLinkPrimitiveParams(_follower, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
-                llSetLinkPrimitiveParams(_tp2cam, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
-                llSetLinkPrimitiveParams(_tp2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                llSetLinkPrimitiveParams(_tp2cam,   [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                llSetLinkPrimitiveParams(_tp2avi,   [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llSetLinkPrimitiveParams(_antipush, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
-                llSetLinkPrimitiveParams(_cam2avi, [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
+                llSetLinkPrimitiveParams(_cam2avi,  [PRIM_POS_LOCAL, <1.00000, 0.27930, -0.24437>]);
                 llOwnerSay("Every Features are off!");
                 menu(id);
             }
