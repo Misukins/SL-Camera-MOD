@@ -35,12 +35,12 @@ list trans_menu             = [];
 list features_menu          = [];
 list main_menu              = [];
 
-string CAMERA_              = "[{Amy}]Camera Mod v3.1";
-string FOLLOWER_            = "[{Amy}]Camera Mod v3.1 - Follower";
-string TP2AVI_              = "[{Amy}]Camera Mod v3.1 - TP2AVI";
-string TP2CAM_              = "[{Amy}]Camera Mod v3.1 - TP2CAM";
-string ANTIPUSH_            = "[{Amy}]Camera Mod v3.1 - AntiPush";
-string CAM2AVI_             = "[{Amy}]Camera Mod v3.1 - Cam2Avi";
+string CAMERA_              = "[{Amy}]Camera Mod v3.2";
+string FOLLOWER_            = "[{Amy}]Camera Mod v3.2 - Follower";
+string TP2AVI_              = "[{Amy}]Camera Mod v3.2 - TP2AVI";
+string TP2CAM_              = "[{Amy}]Camera Mod v3.2 - TP2CAM";
+string ANTIPUSH_            = "[{Amy}]Camera Mod v3.2 - AntiPush";
+string CAM2AVI_             = "[{Amy}]Camera Mod v3.2 - Cam2Avi";
 string copy                 = "copyright: Amy (Misukins)";
 
 vector _greenState          = <0.000, 0.502, 0.000>;
@@ -233,13 +233,27 @@ determine_cameraMOD_links(){
     while (i-- && found < 6);
 }
 
+init_names()
+{
+    llSetLinkPrimitiveParamsFast(_camera,   [PRIM_NAME, CAMERA_]);
+    llSetLinkPrimitiveParamsFast(_follower, [PRIM_NAME, FOLLOWER_]);
+    llSetLinkPrimitiveParamsFast(_tp2avi,   [PRIM_NAME, TP2AVI_]);
+    llSetLinkPrimitiveParamsFast(_tp2cam,   [PRIM_NAME, TP2CAM_]);
+    llSetLinkPrimitiveParamsFast(_antipush, [PRIM_NAME, ANTIPUSH_]);
+    llSetLinkPrimitiveParamsFast(_cam2avi,  [PRIM_NAME, CAM2AVI_]);
+
+    llSetLinkPrimitiveParamsFast(_camera,   [PRIM_DESC, copy]);
+    llSetLinkPrimitiveParamsFast(_follower, [PRIM_DESC, copy]);
+    llSetLinkPrimitiveParamsFast(_tp2avi,   [PRIM_DESC, copy]);
+    llSetLinkPrimitiveParamsFast(_tp2cam,   [PRIM_DESC, copy]);
+    llSetLinkPrimitiveParamsFast(_antipush, [PRIM_DESC, copy]);
+    llSetLinkPrimitiveParamsFast(_cam2avi,  [PRIM_DESC, copy]);
+}
 default
 {
     state_entry()
     {
         link_num = llGetNumberOfPrims();
-        llSetObjectName(CAMERA_);
-        llSetObjectDesc(copy);
         llSetLinkAlpha(_camera, 0.55, ALL_SIDES);
         llPreloadSound(_sound_on);
         llPreloadSound(_sound_off);
@@ -301,6 +315,8 @@ default
         llSetLinkTexture(_tp2avi,   TP2AVI_Texture,     ALL_SIDES);
         llSetLinkTexture(_follower, FOLLOWER_Texture,   ALL_SIDES);
         llSetLinkTexture(_cam2avi,  CAM2AVI_Texture,    ALL_SIDES);
+
+        init_names();
     }
 
     touch_start(integer total_number)
