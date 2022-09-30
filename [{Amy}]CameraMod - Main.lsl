@@ -81,7 +81,7 @@ menu(key id){
     llDialog(id, "Choose an option...", main_menu, channel);
 }
 
-features(key id){ //!
+features(key id){
     if ((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM) && (g_CMCAMAVI))
         features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "HUD_Trans", "† Back †", "† Exit †" ];
     else
@@ -90,6 +90,32 @@ features(key id){ //!
     channel = -1000000000 - (integer)(llFrand(1000000000));
     listener = llListen(channel, "", "", "");
     llDialog(id, "Choose an option...", features_menu, channel);
+}
+
+transparent_menu(key id)
+{
+    if (TRANSDEF)
+        trans_menu = [ "■Default", "□0%", "□10%", "□20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS0)
+        trans_menu = [ "□Default", "■0%", "□10%", "□20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS10)
+        trans_menu = [ "□Default", "□0%", "■10%", "□20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS20)
+        trans_menu = [ "□Default", "□0%", "□10%", "■20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS30)
+        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "■30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS40)
+        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "■40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS50)
+        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "□40%", "■50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS60)
+        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "□40%", "□50%", "■60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS70)
+        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "□40%", "□50%", "□60%", "■70%", "† Back †", "† Exit †" ];
+    llListenRemove(listener);
+    channel = -1000000000 - (integer)(llFrand(1000000000));
+    listener = llListen(channel, "", "", "");
+    llDialog(id, "Choose an option...", trans_menu, channel);
 }
 
 default_cam(){
@@ -241,32 +267,6 @@ determine_cameraMOD_links(){
         }
     }
     while (i-- && found < 6);
-}
-
-transparent_menu(key id)
-{
-    if (TRANSDEF)
-        trans_menu = [ "■Default", "□0%", "□10%", "□20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
-    else if (TRANS0)
-        trans_menu = [ "□Default", "■0%", "□10%", "□20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
-    else if (TRANS10)
-        trans_menu = [ "□Default", "□0%", "■10%", "□20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
-    else if (TRANS20)
-        trans_menu = [ "□Default", "□0%", "□10%", "■20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
-    else if (TRANS30)
-        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "■30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
-    else if (TRANS40)
-        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "■40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
-    else if (TRANS50)
-        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "□40%", "■50%", "□60%", "□70%", "† Back †", "† Exit †" ];
-    else if (TRANS60)
-        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "□40%", "□50%", "■60%", "□70%", "† Back †", "† Exit †" ];
-    else if (TRANS70)
-        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "□40%", "□50%", "□60%", "■70%", "† Back †", "† Exit †" ];
-    llListenRemove(listener);
-    channel = -1000000000 - (integer)(llFrand(1000000000));
-    listener = llListen(channel, "", "", "");
-    llDialog(id, "Choose an option...", trans_menu, channel);
 }
 
 default
