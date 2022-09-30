@@ -22,6 +22,8 @@ integer twentyMDist   = FALSE;
 integer RANGE = 1;
 
 string targetName = "";
+string objectName = "[{Amy}]Camera Mod v3.2 - Follower";
+string copy       = "copyright: Amy (Misukins)";
 
 list avatarList = [];
 list avatarUUIDs = [];
@@ -175,6 +177,8 @@ default
 {
   state_entry()
   {
+    llSetObjectDesc(copy);
+    llSetObjectName(objectName);
     dlgChannel = -1 - (integer)("0x" + llGetSubString( (string)llGetKey(), -7, -1) );
     if(RANGE == 1)
       info("Follow Distance has been set to DEFAULT.");

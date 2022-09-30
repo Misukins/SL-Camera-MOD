@@ -19,6 +19,16 @@ integer g_CMTPAVI           = FALSE;
 integer g_CMCAMAVI          = FALSE;
 integer DEBUG               = FALSE;
 
+integer TRANSDEF            = TRUE;
+integer TRANS0              = FALSE;
+integer TRANS10             = FALSE;
+integer TRANS20             = FALSE;
+integer TRANS30             = FALSE;
+integer TRANS40             = FALSE;
+integer TRANS50             = FALSE;
+integer TRANS60             = FALSE;
+integer TRANS70             = FALSE;
+
 integer listener;
 integer channel;
 integer link_num;
@@ -73,9 +83,9 @@ menu(key id){
 
 features(key id){ //!
     if ((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM) && (g_CMCAMAVI))
-        features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "† Back †", "† Exit †" ];
+        features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "HUD_Trans", "† Back †", "† Exit †" ];
     else
-        features_menu = [ "Follower", "TP2Cam", "TP2Avi", "Cam2Avi", "AntiPush", "Everything", "† Back †", "† Exit †" ];
+        features_menu = [ "Follower", "TP2Cam", "TP2Avi", "Cam2Avi", "AntiPush", "Everything", "HUD_Trans", "† Back †", "† Exit †" ];
     llListenRemove(listener);
     channel = -1000000000 - (integer)(llFrand(1000000000));
     listener = llListen(channel, "", "", "");
@@ -233,28 +243,39 @@ determine_cameraMOD_links(){
     while (i-- && found < 6);
 }
 
-init_names()
+transparent_menu(key id)
 {
-    llSetLinkPrimitiveParamsFast(_camera,   [PRIM_NAME, CAMERA_]);
-    llSetLinkPrimitiveParamsFast(_follower, [PRIM_NAME, FOLLOWER_]);
-    llSetLinkPrimitiveParamsFast(_tp2avi,   [PRIM_NAME, TP2AVI_]);
-    llSetLinkPrimitiveParamsFast(_tp2cam,   [PRIM_NAME, TP2CAM_]);
-    llSetLinkPrimitiveParamsFast(_antipush, [PRIM_NAME, ANTIPUSH_]);
-    llSetLinkPrimitiveParamsFast(_cam2avi,  [PRIM_NAME, CAM2AVI_]);
-
-    llSetLinkPrimitiveParamsFast(_camera,   [PRIM_DESC, copy]);
-    llSetLinkPrimitiveParamsFast(_follower, [PRIM_DESC, copy]);
-    llSetLinkPrimitiveParamsFast(_tp2avi,   [PRIM_DESC, copy]);
-    llSetLinkPrimitiveParamsFast(_tp2cam,   [PRIM_DESC, copy]);
-    llSetLinkPrimitiveParamsFast(_antipush, [PRIM_DESC, copy]);
-    llSetLinkPrimitiveParamsFast(_cam2avi,  [PRIM_DESC, copy]);
+    if (TRANSDEF)
+        trans_menu = [ "■Default", "□0%", "□10%", "□20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS0)
+        trans_menu = [ "□Default", "■0%", "□10%", "□20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS10)
+        trans_menu = [ "□Default", "□0%", "■10%", "□20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS20)
+        trans_menu = [ "□Default", "□0%", "□10%", "■20%", "□30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS30)
+        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "■30%", "□40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS40)
+        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "■40%", "□50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS50)
+        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "□40%", "■50%", "□60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS60)
+        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "□40%", "□50%", "■60%", "□70%", "† Back †", "† Exit †" ];
+    else if (TRANS70)
+        trans_menu = [ "□Default", "□0%", "□10%", "□20%", "□30%", "□40%", "□50%", "□60%", "■70%", "† Back †", "† Exit †" ];
+    llListenRemove(listener);
+    channel = -1000000000 - (integer)(llFrand(1000000000));
+    listener = llListen(channel, "", "", "");
+    llDialog(id, "Choose an option...", trans_menu, channel);
 }
+
 default
 {
     state_entry()
     {
         link_num = llGetNumberOfPrims();
-        llSetLinkAlpha(_camera, 0.55, ALL_SIDES);
+        llSetObjectName(CAMERA_);
+        llSetObjectDesc(copy);
         llPreloadSound(_sound_on);
         llPreloadSound(_sound_off);
         determine_cameraMOD_links();
@@ -308,7 +329,7 @@ default
             llSetScriptState("[{Amy}]CameraMod - Follower", FALSE);
             llSetScriptState("[{Amy}]CameraMod - Tp2Avi",   FALSE);
             llSetScriptState("[{Amy}]CameraMod - Tp2Cam",   FALSE);
-    	*/
+        */
         }
         llSetLinkTexture(_camera,   CAMERA_Texture,     ALL_SIDES);
         llSetLinkTexture(_tp2cam,   TP2CAM_Texture,     ALL_SIDES);
@@ -316,7 +337,78 @@ default
         llSetLinkTexture(_follower, FOLLOWER_Texture,   ALL_SIDES);
         llSetLinkTexture(_cam2avi,  CAM2AVI_Texture,    ALL_SIDES);
 
-        init_names();
+        if(TRANS0){
+            llSetLinkAlpha(_camera,   0,    ALL_SIDES);
+            llSetLinkAlpha(_follower, 0,    ALL_SIDES);
+            llSetLinkAlpha(_tp2avi,   0,    ALL_SIDES);
+            llSetLinkAlpha(_tp2cam,   0,    ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0,    ALL_SIDES);
+            llSetLinkAlpha(_cam2avi,  0,    ALL_SIDES);
+        }
+        else if(TRANS10){
+            llSetLinkAlpha(_camera,   0.10, ALL_SIDES);
+            llSetLinkAlpha(_follower, 0.10, ALL_SIDES);
+            llSetLinkAlpha(_tp2avi,   0.10, ALL_SIDES);
+            llSetLinkAlpha(_tp2cam,   0.10, ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0.10, ALL_SIDES);
+            llSetLinkAlpha(_cam2avi,  0.10, ALL_SIDES);
+        }
+        else if(TRANS20){
+            llSetLinkAlpha(_camera,   0.20, ALL_SIDES);
+            llSetLinkAlpha(_follower, 0.20, ALL_SIDES);
+            llSetLinkAlpha(_tp2avi,   0.20, ALL_SIDES);
+            llSetLinkAlpha(_tp2cam,   0.20, ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0.20, ALL_SIDES);
+            llSetLinkAlpha(_cam2avi,  0.20, ALL_SIDES);
+        }
+        else if(TRANS30){
+            llSetLinkAlpha(_camera,   0.30, ALL_SIDES);
+            llSetLinkAlpha(_follower, 0.30, ALL_SIDES);
+            llSetLinkAlpha(_tp2avi,   0.30, ALL_SIDES);
+            llSetLinkAlpha(_tp2cam,   0.30, ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0.30, ALL_SIDES);
+            llSetLinkAlpha(_cam2avi,  0.30, ALL_SIDES);
+        }
+        else if(TRANS40){
+            llSetLinkAlpha(_camera,   0.40, ALL_SIDES);
+            llSetLinkAlpha(_follower, 0.40, ALL_SIDES);
+            llSetLinkAlpha(_tp2avi,   0.40, ALL_SIDES);
+            llSetLinkAlpha(_tp2cam,   0.40, ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0.40, ALL_SIDES);
+            llSetLinkAlpha(_cam2avi,  0.40, ALL_SIDES);
+        }
+        else if(TRANS50){
+            llSetLinkAlpha(_camera,   0.50, ALL_SIDES);
+            llSetLinkAlpha(_follower, 0.50, ALL_SIDES);
+            llSetLinkAlpha(_tp2avi,   0.50, ALL_SIDES);
+            llSetLinkAlpha(_tp2cam,   0.50, ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0.50, ALL_SIDES);
+            llSetLinkAlpha(_cam2avi,  0.50, ALL_SIDES);
+        }
+        else if(TRANS60){
+            llSetLinkAlpha(_camera,   0.60, ALL_SIDES);
+            llSetLinkAlpha(_follower, 0.60, ALL_SIDES);
+            llSetLinkAlpha(_tp2avi,   0.60, ALL_SIDES);
+            llSetLinkAlpha(_tp2cam,   0.60, ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0.60, ALL_SIDES);
+            llSetLinkAlpha(_cam2avi,  0.60, ALL_SIDES);
+        }
+        else if(TRANS70){
+            llSetLinkAlpha(_camera,   0.70, ALL_SIDES);
+            llSetLinkAlpha(_follower, 0.70, ALL_SIDES);
+            llSetLinkAlpha(_tp2avi,   0.70, ALL_SIDES);
+            llSetLinkAlpha(_tp2cam,   0.70, ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0.70, ALL_SIDES);
+            llSetLinkAlpha(_cam2avi,  0.70, ALL_SIDES);
+        }
+        else{
+            llSetLinkAlpha(_camera,   0.55, ALL_SIDES);
+            llSetLinkAlpha(_follower, 0.55, ALL_SIDES);
+            llSetLinkAlpha(_tp2avi,   0.55, ALL_SIDES);
+            llSetLinkAlpha(_tp2cam,   0.55, ALL_SIDES);
+            llSetLinkAlpha(_antipush, 0.55, ALL_SIDES);
+            llSetLinkAlpha(_cam2avi,  0.55, ALL_SIDES);
+        }
     }
 
     touch_start(integer total_number)
@@ -501,6 +593,134 @@ default
 
                 llOwnerSay("Every Features are off!");
                 menu(id);
+            }
+            else if (message == "HUD_Trans")
+                transparent_menu(id);
+            else if ((message == "■Default") || (message == "□Default")){
+                llSetLinkAlpha(_camera, 0.55, ALL_SIDES);
+                TRANSDEF = TRUE;
+                TRANS0   = FALSE;
+                TRANS10  = FALSE;
+                TRANS20  = FALSE;
+                TRANS30  = FALSE;
+                TRANS40  = FALSE;
+                TRANS50  = FALSE;
+                TRANS60  = FALSE;
+                TRANS70  = FALSE;
+                llTriggerSound(_sound_on, 0.4);
+                transparent_menu(id);
+            }
+            else if (message == "□0%"){
+                llSetLinkAlpha(_camera, 0, ALL_SIDES);
+                TRANSDEF = FALSE;
+                TRANS0   = TRUE;
+                TRANS10  = FALSE;
+                TRANS20  = FALSE;
+                TRANS30  = FALSE;
+                TRANS40  = FALSE;
+                TRANS50  = FALSE;
+                TRANS60  = FALSE;
+                TRANS70  = FALSE;
+                llTriggerSound(_sound_on, 0.4);
+                transparent_menu(id);
+            }
+            else if (message == "□10%"){
+                llSetLinkAlpha(_camera, 0.1, ALL_SIDES);
+                TRANSDEF = FALSE;
+                TRANS0   = FALSE;
+                TRANS10  = TRUE;
+                TRANS20  = FALSE;
+                TRANS30  = FALSE;
+                TRANS40  = FALSE;
+                TRANS50  = FALSE;
+                TRANS60  = FALSE;
+                TRANS70  = FALSE;
+                llTriggerSound(_sound_on, 0.4);
+                transparent_menu(id);
+            }
+            else if (message == "□20%"){
+                llSetLinkAlpha(_camera, 0.2, ALL_SIDES);
+                TRANSDEF = FALSE;
+                TRANS0   = FALSE;
+                TRANS10  = FALSE;
+                TRANS20  = TRUE;
+                TRANS30  = FALSE;
+                TRANS40  = FALSE;
+                TRANS50  = FALSE;
+                TRANS60  = FALSE;
+                TRANS70  = FALSE;
+                llTriggerSound(_sound_on, 0.4);
+                transparent_menu(id);
+            }
+            else if (message == "□30%"){
+                llSetLinkAlpha(_camera, 0.3, ALL_SIDES);
+                TRANSDEF = FALSE;
+                TRANS0   = FALSE;
+                TRANS10  = FALSE;
+                TRANS20  = FALSE;
+                TRANS30  = TRUE;
+                TRANS40  = FALSE;
+                TRANS50  = FALSE;
+                TRANS60  = FALSE;
+                TRANS70  = FALSE;
+                llTriggerSound(_sound_on, 0.4);
+                transparent_menu(id);
+            }
+            else if (message == "□40%"){
+                llSetLinkAlpha(_camera, 0.4, ALL_SIDES);
+                TRANSDEF = FALSE;
+                TRANS0   = FALSE;
+                TRANS10  = FALSE;
+                TRANS20  = FALSE;
+                TRANS30  = FALSE;
+                TRANS40  = TRUE;
+                TRANS50  = FALSE;
+                TRANS60  = FALSE;
+                TRANS70  = FALSE;
+                llTriggerSound(_sound_on, 0.4);
+                transparent_menu(id);
+            }
+            else if (message == "□50%"){
+                llSetLinkAlpha(_camera, 0.5, ALL_SIDES);
+                TRANSDEF = FALSE;
+                TRANS0   = FALSE;
+                TRANS10  = FALSE;
+                TRANS20  = FALSE;
+                TRANS30  = FALSE;
+                TRANS40  = FALSE;
+                TRANS50  = TRUE;
+                TRANS60  = FALSE;
+                TRANS70  = FALSE;
+                llTriggerSound(_sound_on, 0.4);
+                transparent_menu(id);
+            }
+            else if (message == "□60%"){
+                llSetLinkAlpha(_camera, 0.6, ALL_SIDES);
+                TRANSDEF = FALSE;
+                TRANS0   = FALSE;
+                TRANS10  = FALSE;
+                TRANS20  = FALSE;
+                TRANS30  = FALSE;
+                TRANS40  = FALSE;
+                TRANS50  = FALSE;
+                TRANS60  = TRUE;
+                TRANS70  = FALSE;
+                llTriggerSound(_sound_on, 0.4);
+                transparent_menu(id);
+            }
+            else if (message == "□70%"){
+                llSetLinkAlpha(_camera, 0.7, ALL_SIDES);
+                TRANSDEF = FALSE;
+                TRANS0   = FALSE;
+                TRANS10  = FALSE;
+                TRANS20  = FALSE;
+                TRANS30  = FALSE;
+                TRANS40  = FALSE;
+                TRANS50  = FALSE;
+                TRANS60  = FALSE;
+                TRANS70  = TRUE;
+                llTriggerSound(_sound_on, 0.4);
+                transparent_menu(id);
             }
             else{
                 llTriggerSound(_sound_off, 0.4);

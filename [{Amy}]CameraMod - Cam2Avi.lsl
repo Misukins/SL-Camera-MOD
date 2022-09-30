@@ -12,6 +12,8 @@ integer maxPage;
 integer lockedOn;
 
 string objOwner;
+string objName                  = "[{Amy}]Camera Mod v3.2 - Cam2Avi";
+string copy                     = "copyright: Amy (Misukins)";
 
 list agentKeys;
 list agentNames;
@@ -100,6 +102,8 @@ default
 {
     state_entry()
     {
+        llSetObjectDesc(copy);
+        llSetObjectName(objName);
         llRequestPermissions(llGetOwner(), PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA);
     }
 
@@ -131,6 +135,7 @@ state RDY
     state_entry()
     {
         llSetLinkColor(LINK_THIS, _whiteState, ALL_SIDES);
+        llSetObjectName(objName);
         objOwner = llGetOwner();
         objChan = 1 + (integer)llFrand(16777216);
         lsn = llListen(objChan, "", objOwner, "");

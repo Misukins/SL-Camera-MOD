@@ -1,5 +1,8 @@
 key id;
 
+string objName      = "[{Amy}]Camera Mod v3.2 - TP2CAM";
+string copy         = "copyright: Amy (Misukins)";
+
 doTeleport(key id)
 {
     llRequestPermissions(id, PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA);
@@ -9,7 +12,8 @@ default
 {
     state_entry()
     {
-        //NADA
+        llSetObjectDesc(copy);
+        llSetObjectName(objName);
     }
 
     changed(integer change)

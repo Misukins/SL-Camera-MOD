@@ -11,6 +11,8 @@ integer minPage;
 integer maxPage;
 
 string objOwner;
+string objName = "[{Amy}]Camera Mod v3.2 - TP2AVI";
+string copy    = "copyright: Amy (Misukins)";
 
 list agentKeys;
 list agentNames;
@@ -87,6 +89,7 @@ state RDY
 {
     state_entry()
     {
+        llSetObjectName(objName);
         objOwner = llGetOwner();
         objChan = 1 + (integer)llFrand(16777216);
         lsn = llListen(objChan, "", objOwner, "");
