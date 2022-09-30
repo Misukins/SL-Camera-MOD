@@ -1,5 +1,6 @@
 key _sound_on               = "e9a0c36a-dffc-eca0-27b5-3ba4d527dfad";
 key _sound_off              = "de58f2a6-ba96-d252-7351-ca839d847196";
+
 key CAMERA_Texture          = "a6f1942a-8bec-bdce-5a87-f0d7f95f943f";
 key CAM2AVI_Texture         = "27205b1b-232b-59cf-8137-08a93e65156e";
 key FOLLOWER_Texture        = "c43bf1f3-d5dc-aa9e-c8d9-58c9ea346448";
@@ -21,6 +22,7 @@ integer DEBUG               = FALSE;
 integer listener;
 integer channel;
 integer link_num;
+
 integer _camera;
 integer _follower;
 integer _tp2avi;
@@ -29,6 +31,7 @@ integer _antipush;
 integer _cam2avi;
 
 list color_menu             = [];
+list trans_menu             = [];
 list features_menu          = [];
 list main_menu              = [];
 
@@ -70,24 +73,13 @@ menu(key id){
 
 features(key id){ //!
     if ((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM) && (g_CMCAMAVI))
-        features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "ChangeColor", "† Back †", "† Exit †" ];
+        features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "† Back †", "† Exit †" ];
     else
-        features_menu = [ "Follower", "TP2Cam", "TP2Avi", "Cam2Avi", "AntiPush", "Everything", "ChangeColor", "† Back †", "† Exit †" ];
+        features_menu = [ "Follower", "TP2Cam", "TP2Avi", "Cam2Avi", "AntiPush", "Everything", "† Back †", "† Exit †" ];
     llListenRemove(listener);
     channel = -1000000000 - (integer)(llFrand(1000000000));
     listener = llListen(channel, "", "", "");
     llDialog(id, "Choose an option...", features_menu, channel);
-}
-
-changecolor(){
-    //todo !!!!
-    /*
-    TP2CAM  prim color = 
-    TP2AVI  prim color = 
-    CAM2AVI prim color = 
-    */
-
-    debug("SORRY!!!.. this feature is coming soon! <3");
 }
 
 default_cam(){
@@ -204,15 +196,6 @@ petite_cam(){
     petitecamOn     = TRUE;
 }
 
-// TODO
-sitting(){
-    string curAnimState = llGetAnimation(llGetOwner());
-    if (curAnimState == "Sitting"){
-        if(DEBUG)
-            debug("Sitting");
-    }
-}
-
 reset_cam(){
     info("Camera Reset.");
     llResetScript();
@@ -257,7 +240,6 @@ default
         link_num = llGetNumberOfPrims();
         llSetObjectName(CAMERA_);
         llSetObjectDesc(copy);
-        llSitTarget(<0.0, 0.0, 0.1>, ZERO_ROTATION);
         llSetLinkAlpha(_camera, 0.55, ALL_SIDES);
         llPreloadSound(_sound_on);
         llPreloadSound(_sound_off);
@@ -376,7 +358,6 @@ default
                 features(id);
             }
             else if ((message == "Follower") || (message == "√ Follower")){
-                //llTriggerSound(_sound_on, 0.4);
                 if(!g_CMFollower){
                     g_CMFollower = TRUE;
                     llSetLinkAlpha(_follower, 0.55, ALL_SIDES);
@@ -392,7 +373,6 @@ default
                 features(id);
             }
             else if ((message == "TP2Cam") || (message == "√ TP2Cam")){
-                //llTriggerSound(_sound_on, 0.4);
                 if(!g_CMTPCAM){
                     g_CMTPCAM = TRUE;
                     llSetLinkAlpha(_tp2cam, 0.55, ALL_SIDES);
@@ -408,7 +388,6 @@ default
                 features(id);
             }
             else if ((message == "TP2Avi") || (message == "√ TP2Avi")){
-                //llTriggerSound(_sound_on, 0.4);
                 if(!g_CMTPAVI){
                     g_CMTPAVI = TRUE;
                     llSetLinkAlpha(_tp2avi, 0.55, ALL_SIDES);
@@ -424,7 +403,6 @@ default
                 features(id);
             }
             else if ((message == "AntiPush") || (message == "√ AntiPush")){
-                //llTriggerSound(_sound_on, 0.4);
                 if(!g_CMANTIPUSH){
                     g_CMANTIPUSH = TRUE;
                     llSetLinkAlpha(_antipush, 0.55, ALL_SIDES);
@@ -440,7 +418,6 @@ default
                 features(id);
             }
             else if ((message == "Cam2Avi") || (message == "√ Cam2Avi")){
-                //llTriggerSound(_sound_on, 0.4);
                 if(!g_CMCAMAVI){
                     g_CMCAMAVI = TRUE;
                     llSetLinkAlpha(_cam2avi, 0.55, ALL_SIDES);
@@ -508,10 +485,6 @@ default
 
                 llOwnerSay("Every Features are off!");
                 menu(id);
-            }
-            else if (message == "ChangeColor"){
-                changecolor();
-                features(id);
             }
             else{
                 llTriggerSound(_sound_off, 0.4);
