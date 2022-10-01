@@ -17,7 +17,6 @@ integer g_CMTPCAM           = FALSE;
 integer g_CMANTIPUSH        = FALSE;
 integer g_CMTPAVI           = FALSE;
 integer g_CMCAMAVI          = FALSE;
-integer DEBUG               = FALSE;
 
 integer TRANSDEF            = TRUE;
 integer TRANS0              = FALSE;
@@ -56,10 +55,6 @@ string copy                 = "copyright: Amy (Misukins)";
 vector _greenState          = <0.000, 0.502, 0.000>;
 vector _redState            = <0.502, 0.000, 0.000>;
 
-debug(string message){
-    llOwnerSay("[DEBUG] " + message);
-}
-
 info(string message){
     llOwnerSay("[INFO] " + message);
 }
@@ -83,9 +78,9 @@ menu(key id){
 
 features(key id){
     if ((g_CMANTIPUSH) && (g_CMFollower) && (g_CMTPAVI) && (g_CMTPCAM) && (g_CMCAMAVI))
-        features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "HUD_Trans", "† Back †", "† Exit †" ];
+        features_menu = [ "√ Follower", "√ TP2Cam", "√ TP2Avi", "√ Cam2Avi", "√ AntiPush", "√ Everything", "HUD-Trans", "HUD-Color", "† Back †", "† Exit †" ];
     else
-        features_menu = [ "Follower", "TP2Cam", "TP2Avi", "Cam2Avi", "AntiPush", "Everything", "HUD_Trans", "† Back †", "† Exit †" ];
+        features_menu = [ "Follower", "TP2Cam", "TP2Avi", "Cam2Avi", "AntiPush", "Everything", "HUD-Trans", "HUD-Color", "† Back †", "† Exit †" ];
     llListenRemove(listener);
     channel = -1000000000 - (integer)(llFrand(1000000000));
     listener = llListen(channel, "", "", "");
@@ -116,6 +111,12 @@ transparent_menu(key id)
     channel = -1000000000 - (integer)(llFrand(1000000000));
     listener = llListen(channel, "", "", "");
     llDialog(id, "Choose an option...", trans_menu, channel);
+}
+
+changecolor(key id)
+{
+    info("This Feature is coming soon!");
+    features(id);
 }
 
 default_cam(){
@@ -594,7 +595,7 @@ default
                 llOwnerSay("Every Features are off!");
                 menu(id);
             }
-            else if (message == "HUD_Trans")
+            else if (message == "HUD-Trans")
                 transparent_menu(id);
             else if ((message == "■Default") || (message == "□Default")){
                 llSetLinkAlpha(_camera, 0.55, ALL_SIDES);
@@ -722,6 +723,8 @@ default
                 llTriggerSound(_sound_on, 0.4);
                 transparent_menu(id);
             }
+            else if (message == "HUD-Color")
+                changecolor(id);
             else{
                 llTriggerSound(_sound_off, 0.4);
                 return;
