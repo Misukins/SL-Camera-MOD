@@ -1,5 +1,3 @@
-key id;
-
 string objName      = "[{Amy}]Camera Mod v3.2 - TP2CAM";
 string copy         = "copyright: Amy (Misukins)";
 
@@ -24,11 +22,11 @@ default
 
     touch_start(integer total_num)
     {
-        id = llGetOwner();
+        key id = llGetOwner();
         doTeleport(id);
     }
 
-    link_message(integer from,integer to,string msg,key id)
+    link_message(integer from, integer to, string msg, key id)
     {
         if(msg == "RESET"){
           llOwnerSay("Resetting - Teleport 2 Camera Script!");
@@ -38,7 +36,7 @@ default
 
     run_time_permissions(integer perm)
     {
-        id = llGetOwner();
+        key id = llGetOwner();
         if (perm & (PERMISSION_TELEPORT | PERMISSION_TRACK_CAMERA)){
             vector CamPos = llGetCameraPos();
             rotation CamRot = llGetCameraRot();
