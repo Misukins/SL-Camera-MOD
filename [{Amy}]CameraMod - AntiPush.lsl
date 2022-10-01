@@ -94,4 +94,9 @@ default
         else if (change & CHANGED_OWNER)
             llResetScript();
     }
+
+    no_sensor()
+    {
+        movelockMe(gUseMoveLock);
+    }
 }
