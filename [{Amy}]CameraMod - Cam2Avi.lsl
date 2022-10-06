@@ -14,6 +14,7 @@ integer lockedOn;
 string objOwner;
 string objName                  = "[{Amy}]Camera Mod v3.2 - Cam2Avi";
 string copy                     = "copyright: Amy (Misukins)";
+string DiscordLink              = "https://discord.gg/HPYmXNc";
 
 list agentKeys;
 list agentNames;
@@ -141,7 +142,7 @@ state RDY
         lsn = llListen(objChan, "", objOwner, "");
         if(DEBUG){
             string maker = "secondlife:///app/agent/1ffac40f-b1ea-41f9-b576-1993b96e36b2/about";
-            debug("This script needs testing so report them to\n" + (string)maker + "\nThank you!");
+            debug("This script needs testing so report them to\n" + (string)maker + " or " + (string)DiscordLink + "\nThank you!");
         }
     }
 
@@ -155,7 +156,7 @@ state RDY
     {
         if(DEBUG){
             string maker = "secondlife:///app/agent/1ffac40f-b1ea-41f9-b576-1993b96e36b2/about";
-            debug("This script needs testing so report them to\n" + (string)maker + "\nThank you!");
+            debug("This script needs testing so report them to\n" + (string)maker + " or " + (string)DiscordLink + "\nThank you!");
         }
         if(!lockedOn){
             list targets;
