@@ -6,11 +6,19 @@ integer gUseMoveLock;
 integer gRelockMoveLockAfterMovement;
 integer gRelockIsUserMoving;
 
+string gLatestURL;
 string objName = "[{Amy}]Camera Mod v3.2 - AntiPush";
 string copy    = "copyright: Amy (Misukins)";
 
 vector _redState    = <0.502, 0.000, 0.000>;
 vector _whiteState  = <1.000, 1.000, 1.000>;
+
+requestBridgeURL()
+{
+    llReleaseURL(gLatestURL);
+    gLatestURL = "";
+    llRequestURL();
+}
 
 movelockMe(integer lock)
 {
@@ -89,14 +97,28 @@ default
 
     changed(integer change)
     {
-        if (change & (CHANGED_INVENTORY))
+        if (change & CHANGED_INVENTORY)
             movelockMe(gUseMoveLock);
         else if (change & CHANGED_OWNER)
             llResetScript();
     }
 
-    no_sensor()
+    http_request(key httpReqID, string Method, string Body)
     {
-        movelockMe(gUseMoveLock);
+        if (Method == URL_REQUEST_GRANTED)
+            gLatestURL = Body;
+        else if (Method == URL_REQUEST_DENIED)
+            requestBridgeURL();
+        else if (Method == "GET" || Method == "POST")
+        {
+            list commandList = llParseString2List(llGetSubString(Body, 14, llStringLength(Body) - 18), ["|"], []);
+            string cmd = llList2String(commandList, 0);
+            if (cmd == "UseMoveLock"){
+                gUseMoveLock = llList2Integer(commandList, 1);
+                movelockMe(gUseMoveLock);
+            }
+            else if (cmd == "RelockMoveLockAfterMovement")
+                gRelockMoveLockAfterMovement = llList2Integer(commandList, 1);
+        }
     }
 }
