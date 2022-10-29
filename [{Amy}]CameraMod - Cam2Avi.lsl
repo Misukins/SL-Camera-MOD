@@ -87,7 +87,7 @@ lookAtAv(string agentKey, vector targetPos)
         CAMERA_POSITION_THRESHOLD, 2.0, // (0 to 4) meters
         CAMERA_FOCUS_OFFSET, <2, 3, 0> // <-10,-10,-10> to <10,10,10> meters
     ]);
-    llOwnerSay("You are now perving " + (string)target_name + ". (secondlife:///app/agent/" + (string)agentKey + "/about)\n use ALT + Left Mouse click to cam and move you CAMP!");
+    llOwnerSay("You are now perving " + (string)target_name + ". (secondlife:///app/agent/" + (string)agentKey + "/about)\n use ALT + Left Mouse click to cam and move you CAMERA!");
     llSetLinkColor(LINK_THIS, _greenState, ALL_SIDES);
 }
 
@@ -144,6 +144,7 @@ state RDY
             string maker = "secondlife:///app/agent/1ffac40f-b1ea-41f9-b576-1993b96e36b2/about";
             debug("This script needs testing so report them to\n" + (string)maker + " or " + (string)DiscordLink + "\nThank you!");
         }
+        llRequestPermissions(llGetOwner(), PERMISSION_TRACK_CAMERA | PERMISSION_CONTROL_CAMERA);
     }
 
     changed(integer change)
