@@ -423,7 +423,7 @@ state Dialog
         followOn = TRUE;
         llSetLinkColor(LINK_THIS, _greenState, ALL_SIDES);
         if(followOn)
-          llInstantMessage(targetKey, "secondlife:///app/agent/" + (string)id + "/about is now following you.");
+          llInstantMessage(targetKey, "secondlife:///app/agent/" + (string)id + "/about is now following you from " + (string)RANGE + " Meter(s).");
       }
       else if(message == "▼"){
         reset();
